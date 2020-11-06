@@ -1,15 +1,17 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 
-namespace LearnEveryDay.Models
+namespace LearnEveryDay.Dtos.Post
 {
-    public class Post : BaseEntity
+    public class PostCreateDto
     {
-
-        [Key]
-        [Required]
-        public Guid Id { get; set; }
+        public PostCreateDto(AppConfiguration appConfig)
+        {
+            // @todo Check why appConfig does not work
+            // @todo Replace hardcoded Guid with authenticated user Guid
+            UserId = Guid.Parse("6d9a6f69-30b7-4c23-ac31-9d03a6896a89");
+            //UserId = appConfig.MockUserId;
+        }
 
         [Required]
         public Guid UserId { get; set; }
@@ -21,19 +23,16 @@ namespace LearnEveryDay.Models
         [MaxLength(255)]
         public string Title { get; set; }
 
+        [Required]
         [MaxLength(255)]
         public string Ingress { get; set; }
 
-        // @todo change to proper type
+        // @todo change type
         [Required]
         [MaxLength(255)]
         public string Content { get; set; }
 
         [Required]
-        public Boolean Deleted { get; set; }
-
-        [Required]
         public DateTime PublishedDate { get; set; }
-
     }
 }
