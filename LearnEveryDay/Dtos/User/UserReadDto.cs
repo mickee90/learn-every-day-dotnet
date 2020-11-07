@@ -8,7 +8,7 @@ namespace LearnEveryDay.Dtos.User
     {
       Id = user.Id;
       UserTypeId = user.UserTypeId;
-      Username = user.Username;
+      UserName = user.UserName;
       FirstName = user.FirstName;
       LastName = user.LastName;
       Address = user.Address;
@@ -25,7 +25,7 @@ namespace LearnEveryDay.Dtos.User
 
     public int UserTypeId { get; }
 
-    public string Username { get; set; }
+    public string UserName { get; set; }
 
     public string FirstName { get; set; }
 

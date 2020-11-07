@@ -1,23 +1,26 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace LearnEveryDay.Models
 {
-  public class User : BaseEntity
+  public class User : IdentityUser<Guid>
   {
 
-    [Key]
-    [Required]
-    public Guid Id { get; set; }
+    // public User()
+    // {
+    //   this.Id = Guid.NewGuid().ToString();
+    // Add any custom User properties/code here 
+    // }
+
+    // [Key]
+    // [Required]
+    // public override Guid Id { get; set; }
 
     [Required]
     [DefaultValue(2)]
     public int UserTypeId { get; set; }
-
-    [Required]
-    [MaxLength(255)]
-    public string Username { get; set; }
 
     [Required]
     [MaxLength(255)]
@@ -39,9 +42,6 @@ namespace LearnEveryDay.Models
 
     [MaxLength(255)]
     public string City { get; set; }
-
-    [MaxLength(255)]
-    public string Email { get; set; }
 
     [MaxLength(255)]
     public string Phone { get; set; }

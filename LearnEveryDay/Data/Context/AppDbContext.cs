@@ -2,25 +2,21 @@
 using System.Threading;
 using System.Threading.Tasks;
 using LearnEveryDay.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LearnEveryDay.Data
 {
-  public class UserContext : DbContext
+  public class AppDbContext : IdentityDbContext<User, UserRole, Guid>
   {
-    public UserContext(DbContextOptions<UserContext> opt) : base(opt)
+    public AppDbContext(DbContextOptions<AppDbContext> opt) : base(opt)
     {
 
     }
 
+    public DbSet<Post> Posts { get; set; }
     public DbSet<User> Users { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-      builder.Entity<User>()
-          .HasIndex(user => user.UserName)
-          .IsUnique();
-    }
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
@@ -71,4 +67,5 @@ namespace LearnEveryDay.Data
       }
     }
   }
+
 }

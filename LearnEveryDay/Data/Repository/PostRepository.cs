@@ -7,10 +7,10 @@ namespace LearnEveryDay.Data.Repository
 {
   public class PostRepository : IPostRepository
   {
-    private readonly PostContext _context;
+    private readonly AppDbContext _context;
     private readonly AppConfiguration _appConfig;
 
-    public PostRepository(PostContext context, AppConfiguration appConfig)
+    public PostRepository(AppDbContext context, AppConfiguration appConfig)
     {
       _context = context;
       _appConfig = appConfig;

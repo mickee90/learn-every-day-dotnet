@@ -12,10 +12,10 @@ namespace LearnEveryDay.Data.Repository
 {
   public class UserRepository : IUserRepository
   {
-    private readonly UserContext _context;
+    private readonly AppDbContext _context;
     private readonly AppConfiguration _appConfig;
 
-    public UserRepository(UserContext context, AppConfiguration appConfig)
+    public UserRepository(AppDbContext context, AppConfiguration appConfig)
     {
       _context = context;
       _appConfig = appConfig;
@@ -27,7 +27,7 @@ namespace LearnEveryDay.Data.Repository
             Id = Guid.Parse("D059FF23-A35C-4C7C-9B5E-C1C2CD01C173"),
             FirstName = "Test",
             LastName = "User",
-            Username = "test",
+            UserName = "test",
             Password = "test" }
     };
 
@@ -38,7 +38,7 @@ namespace LearnEveryDay.Data.Repository
 
     public UserReadDto Authenticate(AuthenticateRequestDto model)
     {
-      var user = Users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+      var user = Users.SingleOrDefault(x => x.UserName == model.UserName && x.Password == model.Password);
 
       if (user == null) return null;
 

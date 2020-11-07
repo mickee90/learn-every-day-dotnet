@@ -61,9 +61,11 @@ namespace LearnEveryDay
       services.AddScoped<IUserRepository, UserRepository>();
       services.AddTransient<IPostRepository, PostRepository>();
 
-      services.AddDbContext<PostContext>(options =>
-                  options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
-      services.AddDbContext<UserContext>(options =>
+      // services.AddDbContext<PostContext>(options =>
+      //             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+      // services.AddDbContext<UserContext>(options =>
+      //             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+      services.AddDbContext<AppDbContext>(options =>
                   options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
       services.AddMemoryCache();
