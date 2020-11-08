@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LearnEveryDay.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201107193015_InitialCreate")]
+    [Migration("20201108094534_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,11 +127,6 @@ namespace LearnEveryDay.Migrations
                         .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
                         .HasMaxLength(256);
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -199,6 +194,22 @@ namespace LearnEveryDay.Migrations
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ad6fc1b5-08cb-43e1-a26f-6cb6753b70bf"),
+                            ConcurrencyStamp = "a15bc1d9-c84e-4d35-897d-6df06aed9c54",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = new Guid("a9b1bc21-c51c-4ff8-b37e-dc9452edf74d"),
+                            ConcurrencyStamp = "4b4fbfdb-79dd-4fa0-acd6-7becd1539e6c",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

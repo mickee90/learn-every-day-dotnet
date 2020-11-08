@@ -4,47 +4,63 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using LearnEveryDay.Dtos.User;
 using LearnEveryDay.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace LearnEveryDay.Data.Repository
 {
   public class UserRepository : IUserRepository
   {
+    private readonly UserManager<User> _userManager;
     private readonly AppDbContext _context;
     private readonly AppConfiguration _appConfig;
 
-    public UserRepository(AppDbContext context, AppConfiguration appConfig)
+    public UserRepository(UserManager<User> userManager, AppDbContext context, AppConfiguration appConfig)
     {
+      _userManager = userManager;
       _context = context;
       _appConfig = appConfig;
     }
 
-    private List<User> Users = new List<User>
-    {
-        new User {
-            Id = Guid.Parse("D059FF23-A35C-4C7C-9B5E-C1C2CD01C173"),
-            FirstName = "Test",
-            LastName = "User",
-            UserName = "test",
-            Password = "test" }
-    };
-
     public IEnumerable<User> GetAll()
     {
-      return Users;
+      return _context.Users;
     }
 
-    public UserReadDto Authenticate(AuthenticateRequestDto model)
+    public async Task<UserReadDto> Authenticate(AuthenticateRequestDto userDto)
     {
-      var user = Users.SingleOrDefault(x => x.UserName == model.UserName && x.Password == model.Password);
+      var user = await _userManager.FindByEmailAsync(userDto.UserName);
 
-      if (user == null) return null;
+      if (user != null && await _userManager.CheckPasswordAsync(user, userDto.Password))
+      {
+        var token = generateJwtToken(user);
 
-      var token = generateJwtToken(user);
+        return new UserReadDto(user, token);
+      }
+      else
+      {
+        throw new KeyNotFoundException();
+      }
+    }
 
-      return new UserReadDto(user, token);
+    public async Task<UserReadDto> Register(AuthenticateRequestDto userDto)
+    {
+      var user = await _userManager.FindByEmailAsync(userDto.UserName);
+
+      if (user != null && await _userManager.CheckPasswordAsync(user, userDto.Password))
+      {
+        var token = generateJwtToken(user);
+
+        return new UserReadDto(user, token);
+      }
+      else
+      {
+        return null;
+      }
     }
 
     private string generateJwtToken(User user)
@@ -61,16 +77,6 @@ namespace LearnEveryDay.Data.Repository
       var token = tokenHandler.CreateToken(tokenDescriptor);
 
       return tokenHandler.WriteToken(token);
-    }
-
-    public void CreateUser(User User)
-    {
-      if (User == null)
-      {
-        throw new ArgumentNullException(nameof(User));
-      }
-
-      _context.Users.Add(User);
     }
 
     public User GetUserById(Guid id)

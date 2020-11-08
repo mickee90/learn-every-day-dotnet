@@ -42,7 +42,6 @@ namespace LearnEveryDay.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     UserTypeId = table.Column<int>(nullable: false),
-                    Password = table.Column<string>(maxLength: 255, nullable: false),
                     FirstName = table.Column<string>(maxLength: 255, nullable: false),
                     LastName = table.Column<string>(maxLength: 255, nullable: false),
                     Address = table.Column<string>(maxLength: 255, nullable: true),
@@ -184,6 +183,16 @@ namespace LearnEveryDay.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { new Guid("ad6fc1b5-08cb-43e1-a26f-6cb6753b70bf"), "a15bc1d9-c84e-4d35-897d-6df06aed9c54", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { new Guid("a9b1bc21-c51c-4ff8-b37e-dc9452edf74d"), "4b4fbfdb-79dd-4fa0-acd6-7becd1539e6c", "User", "USER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

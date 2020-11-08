@@ -11,6 +11,7 @@ namespace LearnEveryDay.Profiles
     {
       // Source -> Target
       CreateMap<User, UserReadDto>();
+      CreateMap<UserRegistrationDto, User>();
     }
   }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using LearnEveryDay.Models;
@@ -16,7 +17,7 @@ namespace LearnEveryDay.Data
     }
 
     public DbSet<Post> Posts { get; set; }
-    public DbSet<User> Users { get; set; }
+    public override DbSet<User> Users { get; set; }
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
@@ -33,6 +34,25 @@ namespace LearnEveryDay.Data
       OnBeforeSavning();
 
       return (await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken));
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+      base.OnModelCreating(modelBuilder);
+
+      modelBuilder.Entity<UserRole>().HasData(new List<UserRole>
+      {
+        new UserRole {
+          Id = Guid.Parse("AD6FC1B5-08CB-43E1-A26F-6CB6753B70BF"),
+          Name = "Admin",
+          NormalizedName = "ADMIN"
+        },
+        new UserRole {
+          Id = Guid.Parse("A9B1BC21-C51C-4FF8-B37E-DC9452EDF74D"),
+          Name = "User",
+          NormalizedName = "USER"
+        }
+      });
     }
 
     private void OnBeforeSavning()

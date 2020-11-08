@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using LearnEveryDay.Dtos.User;
 using LearnEveryDay.Models;
 
@@ -11,8 +12,7 @@ namespace LearnEveryDay.Data.Repository
 
     User GetUserById(Guid id);
     IEnumerable<User> GetAll();
-    void CreateUser(User User);
     void UpdateUser(User User);
-    UserReadDto Authenticate(AuthenticateRequestDto model);
+    Task<UserReadDto> Authenticate(AuthenticateRequestDto userDto);
   }
 }

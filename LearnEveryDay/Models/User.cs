@@ -8,23 +8,9 @@ namespace LearnEveryDay.Models
   public class User : IdentityUser<Guid>
   {
 
-    // public User()
-    // {
-    //   this.Id = Guid.NewGuid().ToString();
-    // Add any custom User properties/code here 
-    // }
-
-    // [Key]
-    // [Required]
-    // public override Guid Id { get; set; }
-
     [Required]
     [DefaultValue(2)]
     public int UserTypeId { get; set; }
-
-    [Required]
-    [MaxLength(255)]
-    public string Password { get; set; }
 
     [Required]
     [MaxLength(255)]
