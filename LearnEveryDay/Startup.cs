@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using LearnEveryDay.Helpers;
 using LearnEveryDay.Installers;
 
 namespace LearnEveryDay
@@ -38,14 +37,14 @@ namespace LearnEveryDay
 
       app.UseRouting();
 
+      app.UseAuthentication();
+
       app.UseAuthorization();
 
       app.UseCors(x => x
           .AllowAnyOrigin()
           .AllowAnyMethod()
           .AllowAnyHeader());
-
-      app.UseMiddleware<JwtMiddleware>();
 
       app.UseEndpoints(endpoints => endpoints.MapControllers());
     }

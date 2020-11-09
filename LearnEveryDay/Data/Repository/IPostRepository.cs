@@ -8,8 +8,8 @@ namespace LearnEveryDay.Data.Repository
   {
     bool SaveChanges();
 
-    IEnumerable<Post> GetAllPostsByUserId(Guid id);
-    IEnumerable<Post> GetAllPostsByCurrentUser();
+    IEnumerable<Post> GetAllPostsByUserId(Guid UserId);
+    IEnumerable<Post> GetAllPostsByCurrentUser(Guid UserId);
     Post GetPostById(Guid id);
     void CreatePost(Post Post);
     void UpdatePost(Post Post);

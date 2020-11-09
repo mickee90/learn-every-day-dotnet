@@ -13,6 +13,7 @@
     <Folder Include="Dtos\" />
     <Folder Include="Dtos\Post\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />

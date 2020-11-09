@@ -63,13 +63,23 @@ namespace LearnEveryDay.Data.Repository
       }
     }
 
+    // Generate a new Jwt token with proper claims
     private string generateJwtToken(User user)
     {
       var tokenHandler = new JwtSecurityTokenHandler();
-      var key = Encoding.ASCII.GetBytes(_appConfig.Secret);
+      var key = Encoding.ASCII.GetBytes(_appConfig.JwtSecret);
+
+      var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim("id", user.Id.ToString())
+            };
+
       var tokenDescriptor = new SecurityTokenDescriptor
       {
-        Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+        Subject = new ClaimsIdentity(claims),
         Expires = DateTime.UtcNow.AddDays(7),
         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
       };

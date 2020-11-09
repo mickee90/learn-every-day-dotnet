@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using AutoMapper;
 using LearnEveryDay.Data.Repository;
 using LearnEveryDay.Dtos.Post;
-using LearnEveryDay.Helpers;
+using LearnEveryDay.Extensions;
 using LearnEveryDay.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace LearnEveryDay.Controllers
 {
   [Route("api/v1/posts")]
   [ApiController]
+  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class PostController : ControllerBase
   {
     private readonly IPostRepository _repository;
@@ -23,13 +26,11 @@ namespace LearnEveryDay.Controllers
       _mapper = mapper;
     }
 
-
     // api/v1/posts
-    //[Authorize]
     [HttpGet]
     public ActionResult<IEnumerable<PostReadDto>> GetAllPosts()
     {
-      var posts = _repository.GetAllPostsByCurrentUser();
+      var posts = _repository.GetAllPostsByCurrentUser(HttpContext.GetUserId());
 
       return Ok(_mapper.Map<IEnumerable<PostReadDto>>(posts));
     }
@@ -50,9 +51,12 @@ namespace LearnEveryDay.Controllers
 
     // api/v1/posts
     [HttpPost]
+    [Authorize]
     public ActionResult<PostReadDto> CreatePost(PostCreateDto postCreateDto)
     {
+      postCreateDto.UserId = HttpContext.GetUserId();
       var post = _mapper.Map<Post>(postCreateDto);
+
       _repository.CreatePost(post);
       _repository.SaveChanges();
 

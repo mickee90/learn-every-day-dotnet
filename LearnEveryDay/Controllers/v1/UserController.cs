@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using LearnEveryDay.Data.Repository;
-using LearnEveryDay.Dtos.Post;
 using LearnEveryDay.Dtos.User;
-using LearnEveryDay.Helpers;
 using LearnEveryDay.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LearnEveryDay.Controllers
@@ -91,7 +88,6 @@ namespace LearnEveryDay.Controllers
       return Ok();
     }
 
-    [Authorize]
     [HttpGet]
     public IActionResult GetAll()
     {
