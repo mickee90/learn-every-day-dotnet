@@ -19,49 +19,48 @@ using LearnEveryDay.Installers;
 
 namespace LearnEveryDay.Installers
 {
-  public class MvcInstaller : IInstaller
-  {
-
-    public void InstallServices(IServiceCollection services, IConfiguration configuration)
+    public class MvcInstaller : IInstaller
     {
-      services.AddControllers().AddNewtonsoftJson(s =>
-      {
-        s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-      });
 
-      var config = new AppConfiguration();
-      config.MysqlUser = configuration["MysqlUser"];
-      config.MysqlPassword = configuration["MysqlPassword"];
-      config.MysqlDatabase = configuration["MysqlDatabase"];
-      config.ConnectionStrings = configuration["ConnectionStrings:default"];
-      config.MockUserId = Guid.Parse(configuration["MockUserId"]);
-      config.Secret = configuration["JwtSecret"];
+        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddControllers().AddNewtonsoftJson(s =>
+            {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
-      services.AddSingleton<AppConfiguration>(config);
-      services.Configure<AppConfiguration>(configuration.GetSection("AppSettings"));
+            var config = new AppConfiguration();
+            config.MysqlUser = configuration["MysqlUser"];
+            config.MysqlPassword = configuration["MysqlPassword"];
+            config.MysqlDatabase = configuration["MysqlDatabase"];
+            config.ConnectionStrings = configuration["ConnectionStrings:default"];
+            config.Secret = configuration["JwtSecret"];
 
-      // Auto Mapper Configurations
-      var mapperConfig = new MapperConfiguration(mc =>
-      {
-        mc.AddProfile(new PostsProfile());
-        mc.AddProfile(new UsersProfile());
-      });
+            services.AddSingleton<AppConfiguration>(config);
+            services.Configure<AppConfiguration>(configuration.GetSection("AppSettings"));
 
-      IMapper mapper = mapperConfig.CreateMapper();
-      services.AddSingleton(mapper);
+            // Auto Mapper Configurations
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new PostsProfile());
+                mc.AddProfile(new UsersProfile());
+            });
 
-      services.AddScoped<UserManager<User>>();
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
-      services.AddIdentity<User, UserRole>(o =>
-      {
-        o.Password.RequireDigit = false;
-        o.Password.RequireLowercase = false;
-        o.Password.RequireUppercase = false;
-        o.Password.RequireNonAlphanumeric = false;
-        o.Password.RequiredLength = 8;
-        o.User.RequireUniqueEmail = true;
-      }).AddEntityFrameworkStores<AppDbContext>();
+            services.AddScoped<UserManager<User>>();
+
+            services.AddIdentity<User, UserRole>(o =>
+            {
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 8;
+                o.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<AppDbContext>();
+        }
     }
-  }
 
 }

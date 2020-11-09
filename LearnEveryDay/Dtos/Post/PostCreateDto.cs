@@ -10,7 +10,6 @@ namespace LearnEveryDay.Dtos.Post
             // @todo Check why appConfig does not work
             // @todo Replace hardcoded Guid with authenticated user Guid
             UserId = Guid.Parse("6d9a6f69-30b7-4c23-ac31-9d03a6896a89");
-            //UserId = appConfig.MockUserId;
         }
 
         [Required]
