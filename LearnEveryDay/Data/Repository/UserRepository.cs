@@ -100,14 +100,14 @@ namespace LearnEveryDay.Data.Repository
       return (await _context.SaveChangesAsync() >= 0);
     }
 
-    public async Task<bool> UpdateUserAsync(User User)
+    public async Task<bool> UpdateUserAsync(User user)
     {
-      if (User == null)
+      if (user == null)
       {
-        throw new ArgumentNullException(nameof(User));
+        throw new ArgumentNullException(nameof(user));
       }
 
-      _context.Users.Update(User);
+      _context.Users.Update(user);
 
       return await SaveChangesAsync();
     }

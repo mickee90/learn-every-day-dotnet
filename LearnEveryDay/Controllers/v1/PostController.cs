@@ -37,7 +37,7 @@ namespace LearnEveryDay.Controllers
     }
 
     // api/v1/posts/{id}
-    [HttpGet("{id}", Name = "GetPostById")]
+    [HttpGet("{postId}", Name = "GetPostById")]
     public async Task<ActionResult<PostReadDto>> GetPostById(Guid postId)
     {
       var post = await _repository.GetUserPostByIdAsync(postId, HttpContext.GetUserId());

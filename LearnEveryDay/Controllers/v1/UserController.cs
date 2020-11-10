@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using LearnEveryDay.Data.Repository;
 using LearnEveryDay.Dtos.User;
@@ -44,7 +42,6 @@ namespace LearnEveryDay.Controllers
     }
 
     [HttpPost("Register")]
-    // [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(UserRegistrationDto userDto)
     {
       if (!ModelState.IsValid)
