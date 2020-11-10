@@ -57,6 +57,8 @@ namespace LearnEveryDay.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Posts");
                 });
 
@@ -197,14 +199,14 @@ namespace LearnEveryDay.Migrations
                         new
                         {
                             Id = new Guid("ad6fc1b5-08cb-43e1-a26f-6cb6753b70bf"),
-                            ConcurrencyStamp = "a15bc1d9-c84e-4d35-897d-6df06aed9c54",
+                            ConcurrencyStamp = "b9482f48-2a93-4436-89da-e416aa27841e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("a9b1bc21-c51c-4ff8-b37e-dc9452edf74d"),
-                            ConcurrencyStamp = "4b4fbfdb-79dd-4fa0-acd6-7becd1539e6c",
+                            ConcurrencyStamp = "ea6b3d49-ba75-45a9-9ccc-c3e74bae83fd",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -307,6 +309,15 @@ namespace LearnEveryDay.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("LearnEveryDay.Models.Post", b =>
+                {
+                    b.HasOne("LearnEveryDay.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

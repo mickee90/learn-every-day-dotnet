@@ -59,26 +59,6 @@ namespace LearnEveryDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Posts",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    Status = table.Column<bool>(nullable: false),
-                    Title = table.Column<string>(maxLength: 255, nullable: false),
-                    Ingress = table.Column<string>(maxLength: 255, nullable: true),
-                    Content = table.Column<string>(maxLength: 255, nullable: false),
-                    Deleted = table.Column<bool>(nullable: false),
-                    PublishedDate = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Posts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -184,15 +164,41 @@ namespace LearnEveryDay.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("ad6fc1b5-08cb-43e1-a26f-6cb6753b70bf"), "a15bc1d9-c84e-4d35-897d-6df06aed9c54", "Admin", "ADMIN" });
+            migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
+                    Title = table.Column<string>(maxLength: 255, nullable: false),
+                    Ingress = table.Column<string>(maxLength: 255, nullable: true),
+                    Content = table.Column<string>(maxLength: 255, nullable: false),
+                    Deleted = table.Column<bool>(nullable: false),
+                    PublishedDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("a9b1bc21-c51c-4ff8-b37e-dc9452edf74d"), "4b4fbfdb-79dd-4fa0-acd6-7becd1539e6c", "User", "USER" });
+                values: new object[] { new Guid("ad6fc1b5-08cb-43e1-a26f-6cb6753b70bf"), "b9482f48-2a93-4436-89da-e416aa27841e", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { new Guid("a9b1bc21-c51c-4ff8-b37e-dc9452edf74d"), "ea6b3d49-ba75-45a9-9ccc-c3e74bae83fd", "User", "USER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -230,6 +236,11 @@ namespace LearnEveryDay.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_UserId",
+                table: "Posts",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
