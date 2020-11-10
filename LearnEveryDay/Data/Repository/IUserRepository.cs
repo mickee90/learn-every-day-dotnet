@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using LearnEveryDay.Dtos.User;
 using LearnEveryDay.Models;
@@ -8,11 +7,10 @@ namespace LearnEveryDay.Data.Repository
 {
   public interface IUserRepository
   {
-    bool SaveChanges();
+    Task<bool> SaveChangesAsync();
 
-    User GetUserById(Guid id);
-    IEnumerable<User> GetAll();
-    void UpdateUser(User User);
-    Task<UserReadDto> Authenticate(AuthenticateRequestDto userDto);
+    Task<User> GetUserByIdAsync(Guid id);
+    Task<bool> UpdateUserAsync(User User);
+    Task<UserReadDto> AuthenticateAsync(AuthenticateRequestDto userDto);
   }
 }

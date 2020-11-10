@@ -26,6 +26,14 @@ namespace LearnEveryDay.Data
       return base.SaveChanges(acceptAllChangesOnSuccess);
     }
 
+    public async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess)
+    {
+      OnBeforeSavning();
+
+      return await base.SaveChangesAsync(acceptAllChangesOnSuccess);
+    }
+
+
     public override async Task<int> SaveChangesAsync(
         bool acceptAllChangesOnSuccess,
         CancellationToken cancellationToken = default(CancellationToken)

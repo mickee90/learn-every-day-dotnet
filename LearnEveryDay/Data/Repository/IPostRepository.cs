@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using LearnEveryDay.Models;
 
 namespace LearnEveryDay.Data.Repository
 {
   public interface IPostRepository
   {
-    bool SaveChanges();
+    Task<bool> SaveChangesAsync();
 
-    IEnumerable<Post> GetAllPostsByUserId(Guid UserId);
-    IEnumerable<Post> GetAllPostsByCurrentUser(Guid UserId);
-    Post GetPostById(Guid id);
-    Post GetUserPostById(Guid postId, Guid userId);
-    void CreatePost(Post Post);
-    void UpdatePost(Post Post);
-    void DeletePost(Post Post);
-
+    Task<IEnumerable<Post>> GetAllPostsByUserIdAsync(Guid UserId);
+    Task<IEnumerable<Post>> GetAllPostsByCurrentUserAsync(Guid UserId);
+    Task<Post> GetPostByIdAsync(Guid id);
+    Task<Post> GetUserPostByIdAsync(Guid postId, Guid userId);
+    Task<bool> CreatePostAsync(Post Post);
+    Task<bool> UpdatePostAsync(Post Post);
+    Task<bool> DeletePostAsync(Post Post);
   }
 }

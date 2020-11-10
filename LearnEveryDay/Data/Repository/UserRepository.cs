@@ -9,6 +9,7 @@ using LearnEveryDay.Dtos.User;
 using LearnEveryDay.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace LearnEveryDay.Data.Repository
@@ -31,7 +32,7 @@ namespace LearnEveryDay.Data.Repository
       return _context.Users;
     }
 
-    public async Task<UserReadDto> Authenticate(AuthenticateRequestDto userDto)
+    public async Task<UserReadDto> AuthenticateAsync(AuthenticateRequestDto userDto)
     {
       var user = await _userManager.FindByEmailAsync(userDto.UserName);
 
@@ -47,7 +48,7 @@ namespace LearnEveryDay.Data.Repository
       }
     }
 
-    public async Task<UserReadDto> Register(AuthenticateRequestDto userDto)
+    public async Task<UserReadDto> RegisterAsync(AuthenticateRequestDto userDto)
     {
       var user = await _userManager.FindByEmailAsync(userDto.UserName);
 
@@ -89,17 +90,17 @@ namespace LearnEveryDay.Data.Repository
       return tokenHandler.WriteToken(token);
     }
 
-    public User GetUserById(Guid id)
+    public async Task<User> GetUserByIdAsync(Guid id)
     {
-      return _context.Users.FirstOrDefault(user => user.Id == id);
+      return await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
     }
 
-    public bool SaveChanges()
+    public async Task<bool> SaveChangesAsync()
     {
-      return (_context.SaveChanges() >= 0);
+      return (await _context.SaveChangesAsync() >= 0);
     }
 
-    public void UpdateUser(User User)
+    public async Task<bool> UpdateUserAsync(User User)
     {
       if (User == null)
       {
@@ -107,6 +108,8 @@ namespace LearnEveryDay.Data.Repository
       }
 
       _context.Users.Update(User);
+
+      return await SaveChangesAsync();
     }
   }
 }

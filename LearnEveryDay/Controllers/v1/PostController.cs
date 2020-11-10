@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Threading.Tasks;
 
 namespace LearnEveryDay.Controllers
 {
@@ -28,18 +29,18 @@ namespace LearnEveryDay.Controllers
 
     // api/v1/posts
     [HttpGet]
-    public ActionResult<IEnumerable<PostReadDto>> GetAllPosts()
+    public async Task<ActionResult<IEnumerable<PostReadDto>>> GetAllPosts()
     {
-      var posts = _repository.GetAllPostsByCurrentUser(HttpContext.GetUserId());
+      var posts = await _repository.GetAllPostsByCurrentUserAsync(HttpContext.GetUserId());
 
       return Ok(_mapper.Map<IEnumerable<PostReadDto>>(posts));
     }
 
     // api/v1/posts/{id}
     [HttpGet("{id}", Name = "GetPostById")]
-    public ActionResult<PostReadDto> GetPostById(Guid postId)
+    public async Task<ActionResult<PostReadDto>> GetPostById(Guid postId)
     {
-      var post = _repository.GetUserPostById(postId, HttpContext.GetUserId());
+      var post = await _repository.GetUserPostByIdAsync(postId, HttpContext.GetUserId());
 
       if (post == null)
       {
@@ -52,13 +53,12 @@ namespace LearnEveryDay.Controllers
     // api/v1/posts
     [HttpPost]
     [Authorize]
-    public ActionResult<PostReadDto> CreatePost(PostCreateDto postCreateDto)
+    public async Task<ActionResult<PostReadDto>> CreatePost(PostCreateDto postCreateDto)
     {
       postCreateDto.UserId = HttpContext.GetUserId();
       var post = _mapper.Map<Post>(postCreateDto);
 
-      _repository.CreatePost(post);
-      _repository.SaveChanges();
+      await _repository.CreatePostAsync(post);
 
       var postReadDto = _mapper.Map<PostReadDto>(post);
 
@@ -67,14 +67,14 @@ namespace LearnEveryDay.Controllers
 
     // api/v1/posts/{id}
     [HttpPatch("{postId}")]
-    public ActionResult PatchPost(Guid postId, JsonPatchDocument<PostUpdateDto> patchDoc)
+    public async Task<ActionResult> PatchPost(Guid postId, JsonPatchDocument<PostUpdateDto> patchDoc)
     {
       if (patchDoc == null)
       {
         return BadRequest();
       }
 
-      var post = _repository.GetUserPostById(postId, HttpContext.GetUserId());
+      var post = await _repository.GetUserPostByIdAsync(postId, HttpContext.GetUserId());
 
       if (post == null)
       {
@@ -91,10 +91,7 @@ namespace LearnEveryDay.Controllers
 
       _mapper.Map(postToPatch, post);
 
-      _repository.UpdatePost(post);
-
-      _repository.SaveChanges();
-
+      await _repository.UpdatePostAsync(post);
 
       return NoContent();
     }

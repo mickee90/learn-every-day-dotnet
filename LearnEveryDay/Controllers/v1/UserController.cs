@@ -33,7 +33,7 @@ namespace LearnEveryDay.Controllers
         return BadRequest(new { message = "Username or password is incorrect" });
       }
 
-      var userReadDto = await _repository.Authenticate(userDto);
+      var userReadDto = await _repository.AuthenticateAsync(userDto);
 
       if (userReadDto == null)
       {

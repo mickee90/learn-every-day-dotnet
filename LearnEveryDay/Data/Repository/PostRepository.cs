@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using LearnEveryDay.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LearnEveryDay.Data.Repository
 {
@@ -16,7 +18,7 @@ namespace LearnEveryDay.Data.Repository
       _appConfig = appConfig;
     }
 
-    public void CreatePost(Post Post)
+    public async Task<bool> CreatePostAsync(Post Post)
     {
       if (Post == null)
       {
@@ -24,9 +26,11 @@ namespace LearnEveryDay.Data.Repository
       }
 
       _context.Posts.Add(Post);
+
+      return await SaveChangesAsync();
     }
 
-    public void DeletePost(Post Post)
+    public async Task<bool> DeletePostAsync(Post Post)
     {
       if (Post == null)
       {
@@ -34,9 +38,11 @@ namespace LearnEveryDay.Data.Repository
       }
 
       _context.Posts.Remove(Post);
+
+      return await SaveChangesAsync();
     }
 
-    public IEnumerable<Post> GetAllPostsByUserId(Guid UserId)
+    public async Task<IEnumerable<Post>> GetAllPostsByUserIdAsync(Guid UserId)
     {
       if (Guid.Empty == UserId)
       {
@@ -48,21 +54,21 @@ namespace LearnEveryDay.Data.Repository
 
       posts.Where(post => post.UserId == UserId).OrderByDescending(post => post.PublishedDate);
 
-      return posts.ToList();
+      return await posts.ToListAsync();
     }
 
     // @todo fetch logged in user. jwt token? 
-    public IEnumerable<Post> GetAllPostsByCurrentUser(Guid UserId)
+    public async Task<IEnumerable<Post>> GetAllPostsByCurrentUserAsync(Guid UserId)
     {
-      return GetAllPostsByUserId(UserId);
+      return await GetAllPostsByUserIdAsync(UserId);
     }
 
-    public Post GetPostById(Guid postId)
+    public async Task<Post> GetPostByIdAsync(Guid postId)
     {
-      return _context.Posts.FirstOrDefault(post => post.Id == postId);
+      return await _context.Posts.FirstOrDefaultAsync(post => post.Id == postId);
     }
 
-    public Post GetUserPostById(Guid userId, Guid postId)
+    public async Task<Post> GetUserPostByIdAsync(Guid userId, Guid postId)
     {
       if (Guid.Empty == userId)
       {
@@ -74,15 +80,15 @@ namespace LearnEveryDay.Data.Repository
         throw new ArgumentNullException(nameof(postId));
       }
 
-      return _context.Posts.FirstOrDefault(post => post.Id == postId && post.UserId == userId);
+      return await _context.Posts.FirstOrDefaultAsync(post => post.Id == postId && post.UserId == userId);
     }
 
-    public bool SaveChanges()
+    public async Task<bool> SaveChangesAsync()
     {
-      return (_context.SaveChanges() >= 0);
+      return (await _context.SaveChangesAsync() >= 0);
     }
 
-    public void UpdatePost(Post Post)
+    public async Task<bool> UpdatePostAsync(Post Post)
     {
       if (Post == null)
       {
@@ -90,6 +96,8 @@ namespace LearnEveryDay.Data.Repository
       }
 
       _context.Posts.Update(Post);
+
+      return await SaveChangesAsync();
     }
   }
 }
