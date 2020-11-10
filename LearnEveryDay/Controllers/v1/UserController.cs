@@ -25,19 +25,6 @@ namespace LearnEveryDay.Controllers
       _mapper = mapper;
     }
 
-    // [HttpPost("authenticate")]
-    // public IActionResult Authenticate(AuthenticateRequestDto model)
-    // {
-    //   var response = _repository.Authenticate(model);
-
-    //   if (response == null)
-    //   {
-    //     return BadRequest(new { message = "Username or password is incorrect" });
-    //   }
-
-    //   return Ok(response);
-    // }
-
     [HttpPost("authenticate")]
     public async Task<IActionResult> Authenticate(AuthenticateRequestDto userDto)
     {
@@ -88,12 +75,5 @@ namespace LearnEveryDay.Controllers
       return Ok();
     }
 
-    [HttpGet]
-    public IActionResult GetAll()
-    {
-      var users = _repository.GetAll();
-
-      return Ok(users);
-    }
   }
 }

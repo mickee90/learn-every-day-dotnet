@@ -57,9 +57,24 @@ namespace LearnEveryDay.Data.Repository
       return GetAllPostsByUserId(UserId);
     }
 
-    public Post GetPostById(Guid UserId)
+    public Post GetPostById(Guid postId)
     {
-      return _context.Posts.FirstOrDefault(post => post.Id == UserId);
+      return _context.Posts.FirstOrDefault(post => post.Id == postId);
+    }
+
+    public Post GetUserPostById(Guid userId, Guid postId)
+    {
+      if (Guid.Empty == userId)
+      {
+        throw new ArgumentNullException(nameof(userId));
+      }
+
+      if (Guid.Empty == postId)
+      {
+        throw new ArgumentNullException(nameof(postId));
+      }
+
+      return _context.Posts.FirstOrDefault(post => post.Id == postId && post.UserId == userId);
     }
 
     public bool SaveChanges()

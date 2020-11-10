@@ -37,9 +37,9 @@ namespace LearnEveryDay.Controllers
 
     // api/v1/posts/{id}
     [HttpGet("{id}", Name = "GetPostById")]
-    public ActionResult<PostReadDto> GetPostById(Guid id)
+    public ActionResult<PostReadDto> GetPostById(Guid postId)
     {
-      var post = _repository.GetPostById(id);
+      var post = _repository.GetUserPostById(postId, HttpContext.GetUserId());
 
       if (post == null)
       {
@@ -66,15 +66,15 @@ namespace LearnEveryDay.Controllers
     }
 
     // api/v1/posts/{id}
-    [HttpPatch("{id}")]
-    public ActionResult PatchPost(Guid id, JsonPatchDocument<PostUpdateDto> patchDoc)
+    [HttpPatch("{postId}")]
+    public ActionResult PatchPost(Guid postId, JsonPatchDocument<PostUpdateDto> patchDoc)
     {
       if (patchDoc == null)
       {
         return BadRequest();
       }
 
-      var post = _repository.GetPostById(id);
+      var post = _repository.GetUserPostById(postId, HttpContext.GetUserId());
 
       if (post == null)
       {
