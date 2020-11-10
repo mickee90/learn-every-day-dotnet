@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using LearnEveryDay.Data.Repository;
-using LearnEveryDay.Dtos.User;
+using LearnEveryDay.Contracts.v1.Requests;
+using LearnEveryDay.Contracts.v1.Responses;
 using LearnEveryDay.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,14 +25,14 @@ namespace LearnEveryDay.Controllers
     }
 
     [HttpPost("authenticate")]
-    public async Task<IActionResult> Authenticate(AuthenticateRequestDto userDto)
+    public async Task<IActionResult> Authenticate(UserLoginRequest loginRequest)
     {
       if (!ModelState.IsValid)
       {
         return BadRequest(new { message = "Username or password is incorrect" });
       }
 
-      var userReadDto = await _repository.AuthenticateAsync(userDto);
+      var userReadDto = await _repository.AuthenticateAsync(loginRequest);
 
       if (userReadDto == null)
       {
@@ -42,21 +43,21 @@ namespace LearnEveryDay.Controllers
     }
 
     [HttpPost("Register")]
-    public async Task<IActionResult> Register(UserRegistrationDto userDto)
+    public async Task<IActionResult> Register(UserRegisterRequest registerRequest)
     {
       if (!ModelState.IsValid)
       {
         return BadRequest();
       }
 
-      var user = _mapper.Map<User>(userDto);
+      var user = _mapper.Map<User>(registerRequest);
 
-      if (userDto.Email != null)
+      if (registerRequest.Email != null)
       {
-        user.UserName = userDto.Email;
+        user.UserName = registerRequest.Email;
       }
 
-      var result = await _userManager.CreateAsync(user, userDto.Password);
+      var result = await _userManager.CreateAsync(user, registerRequest.Password);
       if (!result.Succeeded)
       {
         foreach (var error in result.Errors)

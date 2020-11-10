@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace LearnEveryDay.Dtos.User
+namespace LearnEveryDay.Contracts.v1.Responses
 {
-  public class UserReadDto
+  public class UserResponse
   {
-    public UserReadDto(LearnEveryDay.Models.User user, string token)
+    public UserResponse(LearnEveryDay.Models.User user, string token)
     {
       Id = user.Id;
       UserTypeId = user.UserTypeId;

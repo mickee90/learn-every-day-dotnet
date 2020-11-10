@@ -1,6 +1,7 @@
 ﻿using System;
 using AutoMapper;
-using LearnEveryDay.Dtos.Post;
+using LearnEveryDay.Contracts.v1.Responses;
+using LearnEveryDay.Contracts.v1.Requests;
 using LearnEveryDay.Models;
 
 namespace LearnEveryDay.Profiles
@@ -10,10 +11,10 @@ namespace LearnEveryDay.Profiles
     public PostsProfile()
     {
       // Source -> Target
-      CreateMap<Post, PostReadDto>();
-      CreateMap<PostCreateDto, Post>();
-      CreateMap<PostUpdateDto, Post>();
-      CreateMap<Post, PostUpdateDto>();
+      CreateMap<Post, PostResponse>();
+      CreateMap<CreatePostRequest, Post>();
+      CreateMap<UpdatePostRequest, Post>();
+      CreateMap<Post, UpdatePostRequest>();
     }
   }
 }

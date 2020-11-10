@@ -1,6 +1,6 @@
-﻿using System;
-using AutoMapper;
-using LearnEveryDay.Dtos.User;
+﻿using AutoMapper;
+using LearnEveryDay.Contracts.v1.Responses;
+using LearnEveryDay.Contracts.v1.Requests;
 using LearnEveryDay.Models;
 
 namespace LearnEveryDay.Profiles
@@ -10,8 +10,8 @@ namespace LearnEveryDay.Profiles
     public UsersProfile()
     {
       // Source -> Target
-      CreateMap<User, UserReadDto>();
-      CreateMap<UserRegistrationDto, User>();
+      CreateMap<User, UserResponse>();
+      CreateMap<UserRegisterRequest, User>();
     }
   }
 }

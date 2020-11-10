@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace LearnEveryDay.Dtos.User
+namespace LearnEveryDay.Contracts.v1.Requests
 {
-  public class UserRegistrationDto
-  {
+  public class UserRegisterRequest
+    {
     [Required]
     public string FirstName { get; set; }
 

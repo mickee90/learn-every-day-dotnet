@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using LearnEveryDay.Dtos.User;
+using LearnEveryDay.Contracts.v1.Requests;
+using LearnEveryDay.Contracts.v1.Responses;
 using LearnEveryDay.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -32,7 +31,7 @@ namespace LearnEveryDay.Data.Repository
       return _context.Users;
     }
 
-    public async Task<UserReadDto> AuthenticateAsync(AuthenticateRequestDto userDto)
+    public async Task<UserResponse> AuthenticateAsync(UserLoginRequest userDto)
     {
       var user = await _userManager.FindByEmailAsync(userDto.UserName);
 
@@ -40,7 +39,7 @@ namespace LearnEveryDay.Data.Repository
       {
         var token = generateJwtToken(user);
 
-        return new UserReadDto(user, token);
+        return new UserResponse(user, token);
       }
       else
       {
@@ -48,7 +47,7 @@ namespace LearnEveryDay.Data.Repository
       }
     }
 
-    public async Task<UserReadDto> RegisterAsync(AuthenticateRequestDto userDto)
+    public async Task<UserResponse> RegisterAsync(UserLoginRequest userDto)
     {
       var user = await _userManager.FindByEmailAsync(userDto.UserName);
 
@@ -56,7 +55,7 @@ namespace LearnEveryDay.Data.Repository
       {
         var token = generateJwtToken(user);
 
-        return new UserReadDto(user, token);
+        return new UserResponse(user, token);
       }
       else
       {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace LearnEveryDay.Dtos.Post
+namespace LearnEveryDay.Contracts.v1.Requests
 {
-  public class PostCreateDto
+  public class CreatePostRequest
   {
     [Required]
     public Guid UserId { get; set; }

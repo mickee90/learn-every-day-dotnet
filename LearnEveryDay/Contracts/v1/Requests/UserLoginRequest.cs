@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace LearnEveryDay.Dtos.User
+namespace LearnEveryDay.Contracts.v1.Requests
 {
-  public class AuthenticateRequestDto
+  public class UserLoginRequest
   {
     [Required]
     public string UserName { get; set; }

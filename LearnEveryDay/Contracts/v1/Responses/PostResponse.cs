@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace LearnEveryDay.Dtos.Post
+namespace LearnEveryDay.Contracts.v1.Responses
 {
-    public class PostReadDto
+    public class PostResponse
     {
         public Guid Id { get; set; }
 
