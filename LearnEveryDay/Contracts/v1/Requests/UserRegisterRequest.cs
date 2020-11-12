@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace LearnEveryDay.Contracts.v1.Requests
 {
   public class UserRegisterRequest
-    {
+  {
     [Required]
     public string FirstName { get; set; }
 

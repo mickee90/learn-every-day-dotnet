@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using LearnEveryDay.Contracts.v1.Requests;
 using LearnEveryDay.Contracts.v1.Responses;
+using LearnEveryDay.Domain;
 using LearnEveryDay.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +21,14 @@ namespace LearnEveryDay.Data.Repository
     private readonly UserManager<User> _userManager;
     private readonly AppDbContext _context;
     private readonly AppConfiguration _appConfig;
+    private readonly IMapper _mapper;
 
-    public UserRepository(UserManager<User> userManager, AppDbContext context, AppConfiguration appConfig)
+    public UserRepository(UserManager<User> userManager, AppDbContext context, AppConfiguration appConfig, IMapper mapper)
     {
       _userManager = userManager;
       _context = context;
       _appConfig = appConfig;
+      _mapper = mapper;
     }
 
     public IEnumerable<User> GetAll()
@@ -31,40 +36,67 @@ namespace LearnEveryDay.Data.Repository
       return _context.Users;
     }
 
-    public async Task<UserResponse> AuthenticateAsync(UserLoginRequest userDto)
+    public async Task<AuthenticationResult> AuthenticateAsync(UserLoginRequest userDto)
     {
       var user = await _userManager.FindByEmailAsync(userDto.UserName);
 
-      if (user != null && await _userManager.CheckPasswordAsync(user, userDto.Password))
+      if (user != null)
       {
-        var token = generateJwtToken(user);
+        return new AuthenticationResult
+        {
+          Errors = new[] { "User do not exist" }
+        };
+      }
 
-        return new UserResponse(user, token);
-      }
-      else
+      var validatedPassword = await _userManager.CheckPasswordAsync(user, userDto.Password);
+      if (validatedPassword)
       {
-        throw new KeyNotFoundException();
+        return new AuthenticationResult
+        {
+          Errors = new[] { "Username and password combination do not exist" }
+        };
       }
+
+      return generateJwtToken(user);
     }
 
-    public async Task<UserResponse> RegisterAsync(UserLoginRequest userDto)
+    public async Task<AuthenticationResult> RegisterAsync(UserRegisterRequest registerRequest)
     {
-      var user = await _userManager.FindByEmailAsync(userDto.UserName);
+      var existingUser = await _userManager.FindByEmailAsync(registerRequest.Email);
 
-      if (user != null && await _userManager.CheckPasswordAsync(user, userDto.Password))
+      if (existingUser != null)
       {
-        var token = generateJwtToken(user);
+        return new AuthenticationResult
+        {
+          Errors = new[] { "User with this email address already exists" }
+        };
+      }
 
-        return new UserResponse(user, token);
-      }
-      else
+      var user = _mapper.Map<User>(registerRequest);
+
+      if (registerRequest.Email != null)
       {
-        return null;
+        // user.Id = Guid.NewGuid();
+        user.UserName = registerRequest.Email;
       }
+
+      var createdUser = await _userManager.CreateAsync(user, registerRequest.Password);
+
+      if (!createdUser.Succeeded)
+      {
+        return new AuthenticationResult
+        {
+          Errors = createdUser.Errors.Select(x => x.Description)
+        };
+      }
+
+      await _userManager.AddToRoleAsync(user, "User");
+
+      return generateJwtToken(user);
     }
 
     // Generate a new Jwt token with proper claims
-    private string generateJwtToken(User user)
+    private AuthenticationResult generateJwtToken(User user)
     {
       var tokenHandler = new JwtSecurityTokenHandler();
       var key = Encoding.ASCII.GetBytes(_appConfig.JwtSecret);
@@ -86,7 +118,12 @@ namespace LearnEveryDay.Data.Repository
 
       var token = tokenHandler.CreateToken(tokenDescriptor);
 
-      return tokenHandler.WriteToken(token);
+      return new AuthenticationResult
+      {
+        User = user,
+        Success = true,
+        Token = tokenHandler.WriteToken(token),
+      };
     }
 
     public async Task<User> GetUserByIdAsync(Guid id)

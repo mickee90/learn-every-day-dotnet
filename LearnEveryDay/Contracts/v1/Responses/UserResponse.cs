@@ -1,10 +1,11 @@
 ﻿using System;
+using LearnEveryDay.Models;
 
 namespace LearnEveryDay.Contracts.v1.Responses
 {
   public class UserResponse
   {
-    public UserResponse(LearnEveryDay.Models.User user, string token)
+    public UserResponse(User user, string token)
     {
       Id = user.Id;
       UserTypeId = user.UserTypeId;

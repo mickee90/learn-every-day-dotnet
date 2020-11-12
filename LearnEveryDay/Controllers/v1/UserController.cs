@@ -29,17 +29,23 @@ namespace LearnEveryDay.Controllers
     {
       if (!ModelState.IsValid)
       {
-        return BadRequest(new { message = "Username or password is incorrect" });
+        return BadRequest(new AuthFailedResponse
+        {
+          Errors = new[] { "Username or password is incorrect" }
+        });
       }
 
-      var userReadDto = await _repository.AuthenticateAsync(loginRequest);
+      var authResponse = await _repository.AuthenticateAsync(loginRequest);
 
-      if (userReadDto == null)
+      if (!authResponse.Success)
       {
-        BadRequest(new { message = "Username or password is incorrect" });
+        return BadRequest(new AuthFailedResponse
+        {
+          Errors = authResponse.Errors
+        });
       }
 
-      return Ok(userReadDto);
+      return Ok(new UserResponse(authResponse.User, authResponse.Token));
     }
 
     [HttpPost("Register")]
@@ -47,30 +53,23 @@ namespace LearnEveryDay.Controllers
     {
       if (!ModelState.IsValid)
       {
-        return BadRequest();
-      }
-
-      var user = _mapper.Map<User>(registerRequest);
-
-      if (registerRequest.Email != null)
-      {
-        user.UserName = registerRequest.Email;
-      }
-
-      var result = await _userManager.CreateAsync(user, registerRequest.Password);
-      if (!result.Succeeded)
-      {
-        foreach (var error in result.Errors)
+        return BadRequest(new AuthFailedResponse
         {
-          ModelState.TryAddModelError(error.Code, error.Description);
-        }
-
-        return BadRequest(new { message = result.Errors });
+          Errors = new[] { "Please enter all the required fields" }
+        });
       }
 
-      await _userManager.AddToRoleAsync(user, "User");
+      var authResponse = await _repository.RegisterAsync(registerRequest);
 
-      return Ok();
+      if (!authResponse.Success)
+      {
+        return BadRequest(new AuthFailedResponse
+        {
+          Errors = authResponse.Errors
+        });
+      }
+
+      return Ok(new UserResponse(authResponse.User, authResponse.Token));
     }
 
   }

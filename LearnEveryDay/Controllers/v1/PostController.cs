@@ -61,9 +61,9 @@ namespace LearnEveryDay.Controllers
 
       await _repository.CreatePostAsync(post);
 
-      var postReadDto = _mapper.Map<PostResponse>(post);
+      var postResponse = _mapper.Map<PostResponse>(post);
 
-      return CreatedAtRoute(nameof(GetPostById), new { postReadDto.Id }, postReadDto);
+      return CreatedAtRoute(nameof(GetPostById), new { postId = postResponse.Id }, postResponse);
     }
 
     // api/v1/posts/{id}
