@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using LearnEveryDay.Contracts.v1.Requests;
-using LearnEveryDay.Contracts.v1.Responses;
 using LearnEveryDay.Domain;
 using LearnEveryDay.Entities;
 
@@ -13,6 +12,7 @@ namespace LearnEveryDay.Data.Repository
 
     Task<User> GetUserByIdAsync(Guid id);
     Task<UserResult> UpdateUserAsync(UpdateUserRequest updateUserRequest, Guid userId);
+    Task<RepositoryResult> UpdatePasswordAsync(UpdatePasswordRequest updatePasswordRequest, Guid userId);
     Task<AuthenticationResult> AuthenticateAsync(UserLoginRequest authRequest);
     Task<AuthenticationResult> RegisterAsync(UserRegisterRequest registerRequest);
   }

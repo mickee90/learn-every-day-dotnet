@@ -135,6 +135,61 @@ namespace LearnEveryDay.Data.Repository
       return (await _context.SaveChangesAsync() >= 0);
     }
 
+    public async Task<RepositoryResult> UpdatePasswordAsync(UpdatePasswordRequest updatePasswordRequest, Guid userId)
+    {
+      if (updatePasswordRequest == null)
+      {
+        throw new ArgumentNullException(nameof(updatePasswordRequest));
+      }
+      
+      if (string.IsNullOrEmpty(updatePasswordRequest.Password))
+      {
+        return new RepositoryResult
+        {
+          Errors = new[] {"The password must not be empty."}
+        };
+      }
+      
+      if (updatePasswordRequest.Password != updatePasswordRequest.ConfirmPassword)
+      {
+        return new RepositoryResult
+        {
+          Errors = new[] {"The passwords do not match."}
+        };
+      }
+
+      var existingUser = await _userManager.FindByIdAsync(userId.ToString());
+
+      if (existingUser == null)
+      {
+        return new RepositoryResult
+        {
+          Errors = new[] {"The user could not be found"}
+        };
+      }
+
+      // Use Generate Token + ResetPassword here since "UpdatePassword" already requires the user to be logged in
+      // And we don't want them to have to enter a 'current password' field in this scenario
+      var token = await _userManager.GeneratePasswordResetTokenAsync(existingUser);
+
+      var result = await _userManager.ResetPasswordAsync(existingUser, token, updatePasswordRequest.Password);
+      
+      if (!result.Succeeded)
+      {
+        return new UserResult
+        {
+          Errors = result.Errors.Select(x => x.Description)
+        };
+      }
+      
+      return new UserResult
+      {
+        User = existingUser,
+        Success = true,
+      };
+
+    }
+
     public async Task<UserResult> UpdateUserAsync(UpdateUserRequest updateUserRequest, Guid userId)
     {
       if (updateUserRequest == null)
@@ -161,13 +216,13 @@ namespace LearnEveryDay.Data.Repository
       existingUser.Email = updateUserRequest.Email;
       existingUser.Phone = updateUserRequest.Phone;
       
-      var updatedUser = await _userManager.UpdateAsync(existingUser);
+      var result = await _userManager.UpdateAsync(existingUser);
       
-      if (!updatedUser.Succeeded)
+      if (!result.Succeeded)
       {
         return new UserResult
         {
-          Errors = updatedUser.Errors.Select(x => x.Description)
+          Errors = result.Errors.Select(x => x.Description)
         };
       }
       

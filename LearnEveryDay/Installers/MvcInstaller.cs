@@ -79,7 +79,8 @@ namespace LearnEveryDay.Installers
         o.Password.RequireNonAlphanumeric = false;
         o.Password.RequiredLength = 8;
         o.User.RequireUniqueEmail = true;
-      }).AddEntityFrameworkStores<AppDbContext>();
+      }).AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders();
     }
   }
 
