@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using LearnEveryDay.Data.Repository;
 using LearnEveryDay.Extensions;
-using LearnEveryDay.Models;
+using LearnEveryDay.Entities;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;

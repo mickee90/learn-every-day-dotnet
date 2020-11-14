@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using LearnEveryDay.Contracts.v1.Requests;
 using LearnEveryDay.Contracts.v1.Responses;
 using LearnEveryDay.Domain;
-using LearnEveryDay.Models;
+using LearnEveryDay.Entities;
 
 namespace LearnEveryDay.Data.Repository
 {

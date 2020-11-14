@@ -9,7 +9,7 @@ using AutoMapper;
 using LearnEveryDay.Contracts.v1.Requests;
 using LearnEveryDay.Contracts.v1.Responses;
 using LearnEveryDay.Domain;
-using LearnEveryDay.Models;
+using LearnEveryDay.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -36,11 +36,11 @@ namespace LearnEveryDay.Data.Repository
       return _context.Users;
     }
 
-    public async Task<AuthenticationResult> AuthenticateAsync(UserLoginRequest userDto)
+    public async Task<AuthenticationResult> AuthenticateAsync(UserLoginRequest authRequest)
     {
-      var user = await _userManager.FindByEmailAsync(userDto.UserName);
+      var user = await _userManager.FindByEmailAsync(authRequest.UserName);
 
-      if (user != null)
+      if (user == null)
       {
         return new AuthenticationResult
         {
@@ -48,8 +48,8 @@ namespace LearnEveryDay.Data.Repository
         };
       }
 
-      var validatedPassword = await _userManager.CheckPasswordAsync(user, userDto.Password);
-      if (validatedPassword)
+      var validatedPassword = await _userManager.CheckPasswordAsync(user, authRequest.Password);
+      if (!validatedPassword)
       {
         return new AuthenticationResult
         {

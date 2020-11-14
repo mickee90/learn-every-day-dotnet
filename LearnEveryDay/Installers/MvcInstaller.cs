@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using AutoMapper;
 using LearnEveryDay.Data;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using LearnEveryDay.Profiles;
 using Microsoft.AspNetCore.Identity;
-using LearnEveryDay.Models;
+using LearnEveryDay.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,7 +16,6 @@ namespace LearnEveryDay.Installers
 {
   public class MvcInstaller : IInstaller
   {
-
     public void InstallServices(IServiceCollection services, IConfiguration configuration)
     {
       services.AddControllers().AddNewtonsoftJson(s =>

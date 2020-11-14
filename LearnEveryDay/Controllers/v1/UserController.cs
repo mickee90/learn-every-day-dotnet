@@ -3,7 +3,7 @@ using AutoMapper;
 using LearnEveryDay.Data.Repository;
 using LearnEveryDay.Contracts.v1.Requests;
 using LearnEveryDay.Contracts.v1.Responses;
-using LearnEveryDay.Models;
+using LearnEveryDay.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

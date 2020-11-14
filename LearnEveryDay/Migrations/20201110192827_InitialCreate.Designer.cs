@@ -8,371 +8,371 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LearnEveryDay.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
-    [Migration("20201110192827_InitialCreate")]
-    partial class InitialCreate
+  [DbContext(typeof(AppDbContext))]
+  [Migration("20201110192827_InitialCreate")]
+  partial class InitialCreate
+  {
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+      modelBuilder
+          .HasAnnotation("ProductVersion", "3.1.9")
+          .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("LearnEveryDay.Models.Post", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+      modelBuilder.Entity("LearnEveryDay.Entities.Post", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("char(36)");
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+            b.Property<string>("Content")
+                      .IsRequired()
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                      .HasMaxLength(255);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+            b.Property<DateTime>("CreatedAt")
+                      .HasColumnType("datetime(6)");
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("tinyint(1)");
+            b.Property<bool>("Deleted")
+                      .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Ingress")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+            b.Property<string>("Ingress")
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                      .HasMaxLength(255);
 
-                    b.Property<DateTime>("PublishedDate")
-                        .HasColumnType("datetime(6)");
+            b.Property<DateTime>("PublishedDate")
+                      .HasColumnType("datetime(6)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("tinyint(1)");
+            b.Property<bool>("Status")
+                      .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+            b.Property<string>("Title")
+                      .IsRequired()
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                      .HasMaxLength(255);
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+            b.Property<DateTime>("UpdatedAt")
+                      .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
+            b.Property<Guid>("UserId")
+                      .HasColumnType("char(36)");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+            b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
-                });
+            b.ToTable("Posts");
+          });
 
-            modelBuilder.Entity("LearnEveryDay.Models.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+      modelBuilder.Entity("LearnEveryDay.Entities.User", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("char(36)");
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+            b.Property<int>("AccessFailedCount")
+                      .HasColumnType("int");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+            b.Property<string>("Address")
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                      .HasMaxLength(255);
 
-                    b.Property<string>("Avatar")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+            b.Property<string>("Avatar")
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                      .HasMaxLength(255);
 
-                    b.Property<bool>("Banned")
-                        .HasColumnType("tinyint(1)");
+            b.Property<bool>("Banned")
+                      .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("City")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+            b.Property<string>("City")
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                      .HasMaxLength(255);
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+            b.Property<string>("ConcurrencyStamp")
+                      .IsConcurrencyToken()
+                      .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
+            b.Property<int>("CountryId")
+                      .HasColumnType("int");
 
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("tinyint(1)");
+            b.Property<bool>("Disabled")
+                      .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
-                        .HasMaxLength(256);
+            b.Property<string>("Email")
+                      .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
+                      .HasMaxLength(256);
 
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("tinyint(1)");
+            b.Property<bool>("EmailConfirmed")
+                      .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+            b.Property<string>("FirstName")
+                      .IsRequired()
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                      .HasMaxLength(255);
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+            b.Property<string>("LastName")
+                      .IsRequired()
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                      .HasMaxLength(255);
 
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+            b.Property<bool>("LockoutEnabled")
+                      .HasColumnType("tinyint(1)");
+
+            b.Property<DateTimeOffset?>("LockoutEnd")
+                      .HasColumnType("datetime(6)");
+
+            b.Property<string>("NormalizedEmail")
+                      .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
+                      .HasMaxLength(256);
+
+            b.Property<string>("NormalizedUserName")
+                      .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
+                      .HasMaxLength(256);
+
+            b.Property<string>("PasswordHash")
+                      .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Phone")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+            b.Property<string>("Phone")
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                      .HasMaxLength(255);
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+            b.Property<string>("PhoneNumber")
+                      .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("tinyint(1)");
+            b.Property<bool>("PhoneNumberConfirmed")
+                      .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+            b.Property<string>("SecurityStamp")
+                      .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("tinyint(1)");
+            b.Property<bool>("TwoFactorEnabled")
+                      .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("UserName")
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
-                        .HasMaxLength(256);
+            b.Property<string>("UserName")
+                      .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
+                      .HasMaxLength(256);
 
-                    b.Property<int>("UserTypeId")
-                        .HasColumnType("int");
+            b.Property<int>("UserTypeId")
+                      .HasColumnType("int");
 
-                    b.Property<string>("ZipCode")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+            b.Property<string>("ZipCode")
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                      .HasMaxLength(255);
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+            b.HasIndex("NormalizedEmail")
+                      .HasName("EmailIndex");
 
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex");
+            b.HasIndex("NormalizedUserName")
+                      .IsUnique()
+                      .HasName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers");
-                });
+            b.ToTable("AspNetUsers");
+          });
 
-            modelBuilder.Entity("LearnEveryDay.Models.UserRole", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+      modelBuilder.Entity("LearnEveryDay.Entities.UserRole", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("char(36)");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+            b.Property<string>("ConcurrencyStamp")
+                      .IsConcurrencyToken()
+                      .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
-                        .HasMaxLength(256);
+            b.Property<string>("Name")
+                      .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
+                      .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
-                        .HasMaxLength(256);
+            b.Property<string>("NormalizedName")
+                      .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
+                      .HasMaxLength(256);
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex");
+            b.HasIndex("NormalizedName")
+                      .IsUnique()
+                      .HasName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles");
+            b.ToTable("AspNetRoles");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("ad6fc1b5-08cb-43e1-a26f-6cb6753b70bf"),
-                            ConcurrencyStamp = "b9482f48-2a93-4436-89da-e416aa27841e",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = new Guid("a9b1bc21-c51c-4ff8-b37e-dc9452edf74d"),
-                            ConcurrencyStamp = "ea6b3d49-ba75-45a9-9ccc-c3e74bae83fd",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
-                });
+            b.HasData(
+                      new
+                  {
+                    Id = new Guid("ad6fc1b5-08cb-43e1-a26f-6cb6753b70bf"),
+                    ConcurrencyStamp = "b9482f48-2a93-4436-89da-e416aa27841e",
+                    Name = "Admin",
+                    NormalizedName = "ADMIN"
+                  },
+                      new
+                  {
+                    Id = new Guid("a9b1bc21-c51c-4ff8-b37e-dc9452edf74d"),
+                    ConcurrencyStamp = "ea6b3d49-ba75-45a9-9ccc-c3e74bae83fd",
+                    Name = "User",
+                    NormalizedName = "USER"
+                  });
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("int");
 
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+            b.Property<string>("ClaimType")
+                      .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+            b.Property<string>("ClaimValue")
+                      .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("char(36)");
+            b.Property<Guid>("RoleId")
+                      .HasColumnType("char(36)");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+            b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
-                });
+            b.ToTable("AspNetRoleClaims");
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("int");
 
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+            b.Property<string>("ClaimType")
+                      .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+            b.Property<string>("ClaimValue")
+                      .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
+            b.Property<Guid>("UserId")
+                      .HasColumnType("char(36)");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+            b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
-                });
+            b.ToTable("AspNetUserClaims");
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+          {
+            b.Property<string>("LoginProvider")
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+            b.Property<string>("ProviderKey")
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("LearnEveryDay.Models.Post", b =>
-                {
-                    b.HasOne("LearnEveryDay.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
-                {
-                    b.HasOne("LearnEveryDay.Models.UserRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
-                {
-                    b.HasOne("LearnEveryDay.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
-                {
-                    b.HasOne("LearnEveryDay.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
-                {
-                    b.HasOne("LearnEveryDay.Models.UserRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LearnEveryDay.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
-                {
-                    b.HasOne("LearnEveryDay.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+            b.Property<string>("ProviderDisplayName")
+                      .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+            b.Property<Guid>("UserId")
+                      .HasColumnType("char(36)");
+
+            b.HasKey("LoginProvider", "ProviderKey");
+
+            b.HasIndex("UserId");
+
+            b.ToTable("AspNetUserLogins");
+          });
+
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+          {
+            b.Property<Guid>("UserId")
+                      .HasColumnType("char(36)");
+
+            b.Property<Guid>("RoleId")
+                      .HasColumnType("char(36)");
+
+            b.HasKey("UserId", "RoleId");
+
+            b.HasIndex("RoleId");
+
+            b.ToTable("AspNetUserRoles");
+          });
+
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+          {
+            b.Property<Guid>("UserId")
+                      .HasColumnType("char(36)");
+
+            b.Property<string>("LoginProvider")
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+            b.Property<string>("Name")
+                      .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+            b.Property<string>("Value")
+                      .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+            b.HasKey("UserId", "LoginProvider", "Name");
+
+            b.ToTable("AspNetUserTokens");
+          });
+
+      modelBuilder.Entity("LearnEveryDay.Entities.Post", b =>
+          {
+            b.HasOne("LearnEveryDay.Entities.User", "User")
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
+
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+          {
+            b.HasOne("LearnEveryDay.Entities.UserRole", null)
+                      .WithMany()
+                      .HasForeignKey("RoleId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
+
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+          {
+            b.HasOne("LearnEveryDay.Entities.User", null)
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
+
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+          {
+            b.HasOne("LearnEveryDay.Entities.User", null)
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
+
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+          {
+            b.HasOne("LearnEveryDay.Entities.UserRole", null)
+                      .WithMany()
+                      .HasForeignKey("RoleId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+
+            b.HasOne("LearnEveryDay.Entities.User", null)
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
+
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+          {
+            b.HasOne("LearnEveryDay.Entities.User", null)
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

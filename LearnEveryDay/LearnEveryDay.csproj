@@ -5,14 +5,10 @@
     <UserSecretsId>8c041090-9fa8-4206-85bd-d6a52c22c5f3</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Data\" />
     <Folder Include="Data\Context\" />
     <Folder Include="Data\Repository\" />
     <Folder Include="Profiles\" />
-    <Folder Include="Dtos\" />
-    <Folder Include="Dtos\Post\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +27,8 @@
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.3" />
     <PackageReference Include="MySql.Data" Version="8.0.22" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.9" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="6.0.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
 </Project>

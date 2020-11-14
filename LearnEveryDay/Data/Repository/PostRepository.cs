@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LearnEveryDay.Models;
+using LearnEveryDay.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LearnEveryDay.Data.Repository
@@ -46,20 +46,21 @@ namespace LearnEveryDay.Data.Repository
     {
       if (Guid.Empty == userId)
       {
-        throw new ArgumentNullException(nameof(userId));
+        throw new UnauthorizedAccessException(nameof(userId));
       }
-
-      // var posts = from post in _context.Posts
-      //             select post;
 
       var posts = _context.Posts.Where(post => post.UserId == userId).OrderByDescending(post => post.PublishedDate);
 
       return await posts.ToListAsync();
     }
 
-    // @todo fetch logged in user. jwt token? 
     public async Task<IEnumerable<Post>> GetAllPostsByCurrentUserAsync(Guid userId)
     {
+      if (Guid.Empty == userId)
+      {
+        throw new UnauthorizedAccessException(nameof(userId));
+      }
+
       return await GetAllPostsByUserIdAsync(userId);
     }
 
@@ -72,7 +73,7 @@ namespace LearnEveryDay.Data.Repository
     {
       if (Guid.Empty == userId)
       {
-        throw new ArgumentNullException(nameof(userId));
+        throw new UnauthorizedAccessException(nameof(userId));
       }
 
       if (Guid.Empty == postId)

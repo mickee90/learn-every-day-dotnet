@@ -1,5 +1,5 @@
 ﻿using System;
-using LearnEveryDay.Models;
+using LearnEveryDay.Entities;
 
 namespace LearnEveryDay.Contracts.v1.Responses
 {

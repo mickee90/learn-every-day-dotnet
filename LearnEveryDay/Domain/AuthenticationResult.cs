@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using LearnEveryDay.Models;
+using LearnEveryDay.Entities;
 
 namespace LearnEveryDay.Domain
 {
