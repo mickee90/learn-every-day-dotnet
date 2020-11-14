@@ -12,7 +12,7 @@ namespace LearnEveryDay.Data.Repository
     Task<bool> SaveChangesAsync();
 
     Task<User> GetUserByIdAsync(Guid id);
-    Task<bool> UpdateUserAsync(User User);
+    Task<UserResult> UpdateUserAsync(UpdateUserRequest updateUserRequest, Guid userId);
     Task<AuthenticationResult> AuthenticateAsync(UserLoginRequest authRequest);
     Task<AuthenticationResult> RegisterAsync(UserRegisterRequest registerRequest);
   }

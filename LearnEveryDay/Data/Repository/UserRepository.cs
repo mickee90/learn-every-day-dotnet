@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using LearnEveryDay.Contracts.v1.Requests;
-using LearnEveryDay.Contracts.v1.Responses;
 using LearnEveryDay.Domain;
 using LearnEveryDay.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -136,16 +135,47 @@ namespace LearnEveryDay.Data.Repository
       return (await _context.SaveChangesAsync() >= 0);
     }
 
-    public async Task<bool> UpdateUserAsync(User user)
+    public async Task<UserResult> UpdateUserAsync(UpdateUserRequest updateUserRequest, Guid userId)
     {
-      if (user == null)
+      if (updateUserRequest == null)
       {
-        throw new ArgumentNullException(nameof(user));
+        throw new ArgumentNullException(nameof(updateUserRequest));
       }
 
-      _context.Users.Update(user);
-
-      return await SaveChangesAsync();
+      var existingUser = await _userManager.FindByIdAsync(userId.ToString());
+      
+      if (existingUser == null)
+      {
+        return new UserResult
+        {
+          Errors = new[] { "The user could not be found" }
+        };
+      }
+      
+      existingUser.UserName = updateUserRequest.UserName;
+      existingUser.FirstName = updateUserRequest.FirstName;
+      existingUser.LastName = updateUserRequest.LastName;
+      existingUser.Address = updateUserRequest.Address;
+      existingUser.ZipCode = updateUserRequest.ZipCode;
+      existingUser.City = updateUserRequest.City;
+      existingUser.Email = updateUserRequest.Email;
+      existingUser.Phone = updateUserRequest.Phone;
+      
+      var updatedUser = await _userManager.UpdateAsync(existingUser);
+      
+      if (!updatedUser.Succeeded)
+      {
+        return new UserResult
+        {
+          Errors = updatedUser.Errors.Select(x => x.Description)
+        };
+      }
+      
+      return new UserResult
+      {
+        User = existingUser,
+        Success = true,
+      };
     }
   }
 }

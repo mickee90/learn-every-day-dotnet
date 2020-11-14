@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LearnEveryDay.Installers;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Filters;
-using SwaggerOptions = LearnEveryDay.Options.SwaggerOptions;
+using LearnEveryDay.Options;
 
 namespace LearnEveryDay
 {
@@ -31,33 +25,6 @@ namespace LearnEveryDay
       services.InstallServicesInAssembly(Configuration);
       services.AddAutoMapper(typeof(Startup));
 
-      // services.AddSwaggerGen(x =>
-      // {
-      //   x.SwaggerDoc("v1", new OpenApiInfo {Title = "LearnEveryDay API", Version = "v1"});
-      //
-      //   x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-      //   {
-      //     Description = "JWT Authentication header using the bearer schema",
-      //     Name = "Authentication",
-      //     In = ParameterLocation.Header,
-      //     Type = SecuritySchemeType.ApiKey,
-      //   });
-      //
-      //   x.AddSecurityRequirement(new OpenApiSecurityRequirement
-      //   {
-      //     {
-      //       new OpenApiSecurityScheme
-      //       {
-      //         Reference = new OpenApiReference
-      //         {
-      //           Id = "Bearer",
-      //           Type = ReferenceType.SecurityScheme,
-      //         }
-      //       },
-      //       new List<string>()
-      //     }
-      //   });
-      // });
       // services.AddMemoryCache();
     }
 
@@ -81,18 +48,6 @@ namespace LearnEveryDay
           .AllowAnyOrigin()
           .AllowAnyMethod()
           .AllowAnyHeader());
-
-      // services.AddSwaggerGen(c =>
-      // {
-      // c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-      // });
-
-      // app.UseSwagger();
-      //
-      // app.UseSwaggerUI(c =>
-      // {
-      //   c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-      // });
 
       var swaggerOptions = new SwaggerOptions();
       Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);

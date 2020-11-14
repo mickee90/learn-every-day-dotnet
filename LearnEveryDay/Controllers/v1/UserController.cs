@@ -1,27 +1,50 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
 using LearnEveryDay.Data.Repository;
 using LearnEveryDay.Contracts.v1.Requests;
 using LearnEveryDay.Contracts.v1.Responses;
-using LearnEveryDay.Entities;
-using Microsoft.AspNetCore.Identity;
+using LearnEveryDay.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LearnEveryDay.Controllers
 {
   [Route("api/v1/users")]
   [ApiController]
+  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class UserController : ControllerBase
   {
-    private readonly UserManager<User> _userManager;
     private readonly IUserRepository _repository;
-    private readonly IMapper _mapper;
 
-    public UserController(UserManager<User> userManager, IUserRepository repository, IMapper mapper)
+    public UserController(IUserRepository repository)
     {
-      _userManager = userManager;
       _repository = repository;
-      _mapper = mapper;
+    }
+
+    [HttpPut("UpdateUser")]
+    [Authorize]
+    public async Task<IActionResult> UpdateUser(UpdateUserRequest updateUserRequest)
+    {
+      if (!ModelState.IsValid)
+      {
+        // @todo add better response information
+        return BadRequest(new UserFailedResponse
+        {
+          Errors = new[] {"Enter the required fields"}
+        });
+      }
+
+      var userResponse = await _repository.UpdateUserAsync(updateUserRequest, HttpContext.GetUserId());
+
+      if (!userResponse.Success)
+      {
+        return BadRequest(new UserFailedResponse
+        {
+          Errors = userResponse.Errors
+        });
+      }
+
+      return Ok(new UserResponse(userResponse.User, null));
     }
 
     [HttpPost("authenticate")]
@@ -71,6 +94,5 @@ namespace LearnEveryDay.Controllers
 
       return Ok(new UserResponse(authResponse.User, authResponse.Token));
     }
-
   }
 }
