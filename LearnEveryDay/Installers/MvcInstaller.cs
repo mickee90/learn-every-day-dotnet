@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using LearnEveryDay.Data.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using FluentValidation.AspNetCore;
+using LearnEveryDay.Filters;
 using LearnEveryDay.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
@@ -30,6 +32,14 @@ namespace LearnEveryDay.Installers
 
       services.AddSingleton<AppConfiguration>(config);
       services.Configure<AppConfiguration>(configuration.GetSection("AppSettings"));
+      
+      services
+        .AddMvc(options =>
+        {
+          options.EnableEndpointRouting = false;
+          options.Filters.Add<ValidationFilter>();
+        })
+        .AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
 
       services.AddScoped<UserManager<User>>();
 
@@ -69,9 +79,6 @@ namespace LearnEveryDay.Installers
         o.User.RequireUniqueEmail = true;
       }).AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
-      
-      services.AddSingleton<IPostService, PostService>();
-      services.AddSingleton<IUserService, UserService>();
     }
   }
 

@@ -20,14 +20,6 @@ namespace LearnEveryDay.Controllers.Api.v1.Auth
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new AuthFailedResponse
-                {
-                    Errors = new[] {"Please enter all the required fields"}
-                });
-            }
-
             var authResponse = await _repository.RegisterAsync(request);
 
             if (!authResponse.Success)

@@ -26,31 +26,13 @@ namespace LearnEveryDay.Controllers.Api.v1.Users
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> UpdatePassword(UpdatePasswordRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new ErrorResponse
-                {
-                    Errors = ModelState.Select(x => x.Value.Errors)
-                        .Where(y => y.Count > 0)
-                        .Cast<string>()
-                });
-            }
-
-            if (request.Password != request.ConfirmPassword)
-            {
-                return BadRequest(new ErrorResponse
-                {
-                    Errors = new[] {"The passwords do not match."}
-                });
-            }
-
             var passwordResponse = await _service.UpdatePasswordAsync(HttpContext.GetUserId(), request);
             
             if (!passwordResponse.Success)
             {
                 return BadRequest(new ErrorResponse
                 {
-                    Errors = passwordResponse.Errors
+                    Errors = passwordResponse.Errors.ToList()
                 });
             }
 

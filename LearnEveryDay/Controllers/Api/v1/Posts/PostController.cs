@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using LearnEveryDay.Repositories;
 using LearnEveryDay.Extensions;
@@ -90,7 +91,7 @@ namespace LearnEveryDay.Controllers.Api.v1.Posts
       {
         return BadRequest(new ErrorResponse
         {
-          Errors = response.Errors
+          Errors = response.Errors.ToList()
         });
       }
 

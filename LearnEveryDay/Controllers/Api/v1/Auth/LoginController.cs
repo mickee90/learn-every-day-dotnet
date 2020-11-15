@@ -20,14 +20,6 @@ namespace LearnEveryDay.Controllers.Api.v1.Auth
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new AuthFailedResponse
-                {
-                    Errors = new[] {"Username or password is incorrect"}
-                });
-            }
-
             var authResponse = await _repository.AuthenticateAsync(request);
 
             if (!authResponse.Success)

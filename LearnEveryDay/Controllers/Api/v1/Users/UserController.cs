@@ -28,24 +28,11 @@ namespace LearnEveryDay.Controllers.Api.v1.Users
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Update(UpdateUserRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new ErrorResponse
-                {
-                    Errors = ModelState.Select(x => x.Value.Errors)
-                        .Where(y => y.Count > 0)
-                        .Cast<string>()
-                });
-            }
-
             var existingUser = await _repository.GetUserByIdAsync(HttpContext.GetUserId());
       
             if (existingUser == null)
             {
-                return BadRequest(new ErrorResponse
-                {
-                    Errors = new[] {"The user could not be found"}
-                });
+                return BadRequest(new ErrorResponse("The user could not be found."));
             }
 
             var response = await _service.UpdateUserAsync(existingUser, request);
@@ -54,7 +41,7 @@ namespace LearnEveryDay.Controllers.Api.v1.Users
             {
                 return BadRequest(new ErrorResponse
                 {
-                    Errors = response.Errors
+                    Errors = response.Errors.ToList()
                 });
             }
 

@@ -1,6 +1,7 @@
 
 using LearnEveryDay.Data;
 using LearnEveryDay.Repositories;
+using LearnEveryDay.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,9 @@ namespace LearnEveryDay.Installers
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<IPostRepository, PostRepository>();
+            
+            services.AddTransient<IPostService, PostService>();
+            services.AddTransient<IUserService, UserService>();
         }
     }
 }
