@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using LearnEveryDay.Contracts.v1.Requests;
+using LearnEveryDay.Data;
 using LearnEveryDay.Domain;
-using LearnEveryDay.Entities;
+using LearnEveryDay.Data.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-namespace LearnEveryDay.Data.Repository
+namespace LearnEveryDay.Repositories
 {
   public class UserRepository : IUserRepository
   {
@@ -30,14 +30,9 @@ namespace LearnEveryDay.Data.Repository
       _mapper = mapper;
     }
 
-    public IEnumerable<User> GetAll()
-    {
-      return _context.Users;
-    }
-
     public async Task<AuthenticationResult> AuthenticateAsync(UserLoginRequest authRequest)
     {
-      var user = await _userManager.FindByEmailAsync(authRequest.UserName);
+      var user = await _userManager.FindByNameAsync(authRequest.UserName);
 
       if (user == null)
       {
@@ -125,9 +120,9 @@ namespace LearnEveryDay.Data.Repository
       };
     }
 
-    public async Task<User> GetUserByIdAsync(Guid id)
+    public async Task<User> GetUserByIdAsync(Guid userId)
     {
-      return await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
+      return await _userManager.FindByIdAsync(userId.ToString());
     }
 
     public async Task<bool> SaveChangesAsync()
@@ -135,44 +130,13 @@ namespace LearnEveryDay.Data.Repository
       return (await _context.SaveChangesAsync() >= 0);
     }
 
-    public async Task<RepositoryResult> UpdatePasswordAsync(UpdatePasswordRequest updatePasswordRequest, Guid userId)
+    public async Task<UserResult> UpdatePasswordAsync(User user, string password)
     {
-      if (updatePasswordRequest == null)
-      {
-        throw new ArgumentNullException(nameof(updatePasswordRequest));
-      }
-      
-      if (string.IsNullOrEmpty(updatePasswordRequest.Password))
-      {
-        return new RepositoryResult
-        {
-          Errors = new[] {"The password must not be empty."}
-        };
-      }
-      
-      if (updatePasswordRequest.Password != updatePasswordRequest.ConfirmPassword)
-      {
-        return new RepositoryResult
-        {
-          Errors = new[] {"The passwords do not match."}
-        };
-      }
-
-      var existingUser = await _userManager.FindByIdAsync(userId.ToString());
-
-      if (existingUser == null)
-      {
-        return new RepositoryResult
-        {
-          Errors = new[] {"The user could not be found"}
-        };
-      }
-
       // Use Generate Token + ResetPassword here since "UpdatePassword" already requires the user to be logged in
       // And we don't want them to have to enter a 'current password' field in this scenario
-      var token = await _userManager.GeneratePasswordResetTokenAsync(existingUser);
+      var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-      var result = await _userManager.ResetPasswordAsync(existingUser, token, updatePasswordRequest.Password);
+      var result = await _userManager.ResetPasswordAsync(user, token, password);
       
       if (!result.Succeeded)
       {
@@ -184,39 +148,15 @@ namespace LearnEveryDay.Data.Repository
       
       return new UserResult
       {
-        User = existingUser,
+        User = user,
         Success = true,
       };
 
     }
 
-    public async Task<UserResult> UpdateUserAsync(UpdateUserRequest updateUserRequest, Guid userId)
+    public async Task<UserResult> UpdateUserAsync(User user)
     {
-      if (updateUserRequest == null)
-      {
-        throw new ArgumentNullException(nameof(updateUserRequest));
-      }
-
-      var existingUser = await _userManager.FindByIdAsync(userId.ToString());
-      
-      if (existingUser == null)
-      {
-        return new UserResult
-        {
-          Errors = new[] { "The user could not be found" }
-        };
-      }
-      
-      existingUser.UserName = updateUserRequest.UserName;
-      existingUser.FirstName = updateUserRequest.FirstName;
-      existingUser.LastName = updateUserRequest.LastName;
-      existingUser.Address = updateUserRequest.Address;
-      existingUser.ZipCode = updateUserRequest.ZipCode;
-      existingUser.City = updateUserRequest.City;
-      existingUser.Email = updateUserRequest.Email;
-      existingUser.Phone = updateUserRequest.Phone;
-      
-      var result = await _userManager.UpdateAsync(existingUser);
+      var result = await _userManager.UpdateAsync(user);
       
       if (!result.Succeeded)
       {
@@ -228,7 +168,7 @@ namespace LearnEveryDay.Data.Repository
       
       return new UserResult
       {
-        User = existingUser,
+        User = user,
         Success = true,
       };
     }

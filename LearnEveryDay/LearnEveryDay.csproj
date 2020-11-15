@@ -5,9 +5,8 @@
     <UserSecretsId>8c041090-9fa8-4206-85bd-d6a52c22c5f3</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="Controllers\Api" />
     <Folder Include="Data\" />
-    <Folder Include="Data\Context\" />
-    <Folder Include="Data\Repository\" />
     <Folder Include="Profiles\" />
     <Folder Include="Extensions\" />
   </ItemGroup>

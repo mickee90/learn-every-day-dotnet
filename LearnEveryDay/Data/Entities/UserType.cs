@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LearnEveryDay.Entities
+namespace LearnEveryDay.Data.Entities
 {
   public class UserType
   {

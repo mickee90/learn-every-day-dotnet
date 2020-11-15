@@ -1,6 +1,6 @@
 
 using LearnEveryDay.Data;
-using LearnEveryDay.Data.Repository;
+using LearnEveryDay.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

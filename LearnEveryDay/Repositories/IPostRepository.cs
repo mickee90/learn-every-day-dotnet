@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LearnEveryDay.Entities;
+using LearnEveryDay.Data.Entities;
 
-namespace LearnEveryDay.Data.Repository
+namespace LearnEveryDay.Repositories
 {
   public interface IPostRepository
   {

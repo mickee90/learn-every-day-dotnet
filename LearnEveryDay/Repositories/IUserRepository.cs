@@ -2,17 +2,17 @@
 using System.Threading.Tasks;
 using LearnEveryDay.Contracts.v1.Requests;
 using LearnEveryDay.Domain;
-using LearnEveryDay.Entities;
+using LearnEveryDay.Data.Entities;
 
-namespace LearnEveryDay.Data.Repository
+namespace LearnEveryDay.Repositories
 {
   public interface IUserRepository
   {
     Task<bool> SaveChangesAsync();
 
     Task<User> GetUserByIdAsync(Guid id);
-    Task<UserResult> UpdateUserAsync(UpdateUserRequest updateUserRequest, Guid userId);
-    Task<RepositoryResult> UpdatePasswordAsync(UpdatePasswordRequest updatePasswordRequest, Guid userId);
+    Task<UserResult> UpdateUserAsync(User user);
+    Task<UserResult> UpdatePasswordAsync(User user, string password);
     Task<AuthenticationResult> AuthenticateAsync(UserLoginRequest authRequest);
     Task<AuthenticationResult> RegisterAsync(UserRegisterRequest registerRequest);
   }

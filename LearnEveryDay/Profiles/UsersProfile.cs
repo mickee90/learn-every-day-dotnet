@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using LearnEveryDay.Contracts.v1.Responses;
 using LearnEveryDay.Contracts.v1.Requests;
-using LearnEveryDay.Entities;
+using LearnEveryDay.Data.Entities;
 
 namespace LearnEveryDay.Profiles
 {

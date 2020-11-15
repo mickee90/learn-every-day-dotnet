@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LearnEveryDay.Entities
+namespace LearnEveryDay.Data.Entities
 {
   public class BaseEntity
   {

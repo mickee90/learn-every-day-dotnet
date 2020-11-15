@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LearnEveryDay.Entities;
+using LearnEveryDay.Data;
+using LearnEveryDay.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace LearnEveryDay.Data.Repository
+namespace LearnEveryDay.Repositories
 {
   public class PostRepository : IPostRepository
   {

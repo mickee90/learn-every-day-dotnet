@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace LearnEveryDay.Entities
+namespace LearnEveryDay.Data.Entities
 {
   public class User : IdentityUser<Guid>
   {

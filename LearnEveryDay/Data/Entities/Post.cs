@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LearnEveryDay.Entities
+namespace LearnEveryDay.Data.Entities
 {
   public class Post : BaseEntity
   {

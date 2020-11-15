@@ -1,15 +1,13 @@
 
-using System.Collections.Generic;
-using AutoMapper;
 using LearnEveryDay.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
-using LearnEveryDay.Profiles;
 using Microsoft.AspNetCore.Identity;
-using LearnEveryDay.Entities;
+using LearnEveryDay.Data.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using LearnEveryDay.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace LearnEveryDay.Installers
@@ -32,16 +30,6 @@ namespace LearnEveryDay.Installers
 
       services.AddSingleton<AppConfiguration>(config);
       services.Configure<AppConfiguration>(configuration.GetSection("AppSettings"));
-
-      // Auto Mapper Configurations
-      var mapperConfig = new MapperConfiguration(mc =>
-      {
-        mc.AddProfile(new PostsProfile());
-        mc.AddProfile(new UsersProfile());
-      });
-
-      IMapper mapper = mapperConfig.CreateMapper();
-      services.AddSingleton(mapper);
 
       services.AddScoped<UserManager<User>>();
 
@@ -81,6 +69,9 @@ namespace LearnEveryDay.Installers
         o.User.RequireUniqueEmail = true;
       }).AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
+      
+      services.AddSingleton<IPostService, PostService>();
+      services.AddSingleton<IUserService, UserService>();
     }
   }
 

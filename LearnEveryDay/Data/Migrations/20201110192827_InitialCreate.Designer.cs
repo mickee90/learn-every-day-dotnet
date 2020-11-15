@@ -19,7 +19,7 @@ namespace LearnEveryDay.Migrations
           .HasAnnotation("ProductVersion", "3.1.9")
           .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-      modelBuilder.Entity("LearnEveryDay.Entities.Post", b =>
+      modelBuilder.Entity("LearnEveryDay.Data.Entities.Post", b =>
           {
             b.Property<Guid>("Id")
                       .ValueGeneratedOnAdd()
@@ -64,7 +64,7 @@ namespace LearnEveryDay.Migrations
             b.ToTable("Posts");
           });
 
-      modelBuilder.Entity("LearnEveryDay.Entities.User", b =>
+      modelBuilder.Entity("LearnEveryDay.Data.Entities.User", b =>
           {
             b.Property<Guid>("Id")
                       .ValueGeneratedOnAdd()
@@ -171,7 +171,7 @@ namespace LearnEveryDay.Migrations
             b.ToTable("AspNetUsers");
           });
 
-      modelBuilder.Entity("LearnEveryDay.Entities.UserRole", b =>
+      modelBuilder.Entity("LearnEveryDay.Data.Entities.UserRole", b =>
           {
             b.Property<Guid>("Id")
                       .ValueGeneratedOnAdd()
@@ -313,9 +313,9 @@ namespace LearnEveryDay.Migrations
             b.ToTable("AspNetUserTokens");
           });
 
-      modelBuilder.Entity("LearnEveryDay.Entities.Post", b =>
+      modelBuilder.Entity("LearnEveryDay.Data.Entities.Post", b =>
           {
-            b.HasOne("LearnEveryDay.Entities.User", "User")
+            b.HasOne("LearnEveryDay.Data.Entities.User", "User")
                       .WithMany()
                       .HasForeignKey("UserId")
                       .OnDelete(DeleteBehavior.Cascade)
@@ -324,7 +324,7 @@ namespace LearnEveryDay.Migrations
 
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
           {
-            b.HasOne("LearnEveryDay.Entities.UserRole", null)
+            b.HasOne("LearnEveryDay.Data.Entities.UserRole", null)
                       .WithMany()
                       .HasForeignKey("RoleId")
                       .OnDelete(DeleteBehavior.Cascade)
@@ -333,7 +333,7 @@ namespace LearnEveryDay.Migrations
 
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
           {
-            b.HasOne("LearnEveryDay.Entities.User", null)
+            b.HasOne("LearnEveryDay.Data.Entities.User", null)
                       .WithMany()
                       .HasForeignKey("UserId")
                       .OnDelete(DeleteBehavior.Cascade)
@@ -342,7 +342,7 @@ namespace LearnEveryDay.Migrations
 
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
           {
-            b.HasOne("LearnEveryDay.Entities.User", null)
+            b.HasOne("LearnEveryDay.Data.Entities.User", null)
                       .WithMany()
                       .HasForeignKey("UserId")
                       .OnDelete(DeleteBehavior.Cascade)
@@ -351,13 +351,13 @@ namespace LearnEveryDay.Migrations
 
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
           {
-            b.HasOne("LearnEveryDay.Entities.UserRole", null)
+            b.HasOne("LearnEveryDay.Data.Entities.UserRole", null)
                       .WithMany()
                       .HasForeignKey("RoleId")
                       .OnDelete(DeleteBehavior.Cascade)
                       .IsRequired();
 
-            b.HasOne("LearnEveryDay.Entities.User", null)
+            b.HasOne("LearnEveryDay.Data.Entities.User", null)
                       .WithMany()
                       .HasForeignKey("UserId")
                       .OnDelete(DeleteBehavior.Cascade)
@@ -366,7 +366,7 @@ namespace LearnEveryDay.Migrations
 
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
           {
-            b.HasOne("LearnEveryDay.Entities.User", null)
+            b.HasOne("LearnEveryDay.Data.Entities.User", null)
                       .WithMany()
                       .HasForeignKey("UserId")
                       .OnDelete(DeleteBehavior.Cascade)
