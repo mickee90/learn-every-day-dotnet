@@ -8,7 +8,6 @@ namespace LearnEveryDay.Validators
     {
         public CreatePostRequestValidator()
         {
-            RuleFor(x => x.Status).NotEmpty();
             RuleFor(x => x.Title).NotEmpty().MaximumLength(255);
             RuleFor(x => x.Ingress).NotEmpty().MaximumLength(255);
             RuleFor(x => x.Content).NotEmpty().MaximumLength(255);

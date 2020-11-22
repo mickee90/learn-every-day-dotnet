@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using LearnEveryDay.Contracts.v1.Responses;
 using LearnEveryDay.Contracts.v1.Requests;

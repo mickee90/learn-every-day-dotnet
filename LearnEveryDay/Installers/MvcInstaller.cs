@@ -39,7 +39,14 @@ namespace LearnEveryDay.Installers
           options.EnableEndpointRouting = false;
           options.Filters.Add<ValidationFilter>();
         })
-        .AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
+        .AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>())
+        .AddNewtonsoftJson(options =>
+        {
+          options.SerializerSettings.ContractResolver = new DefaultContractResolver()
+          {
+            NamingStrategy = new SnakeCaseNamingStrategy()
+          };
+        });
 
       services.AddScoped<UserManager<User>>();
 

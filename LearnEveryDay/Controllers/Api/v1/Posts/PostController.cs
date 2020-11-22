@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -37,11 +38,13 @@ namespace LearnEveryDay.Controllers.Api.v1.Posts
     {
       var posts = await _repository.GetAllPostsByCurrentUserAsync(HttpContext.GetUserId());
 
-      return Ok(_mapper.Map<IEnumerable<PostResponse>>(posts));
+      var postResponse = _mapper.Map<IEnumerable<Post>>(posts);
+
+      return Ok(new PostsResponse(postResponse));
     }
 
     // api/v1/posts/{postId}
-    [HttpGet("{postId}")]
+    [HttpGet("{postId}", Name="Get")]
     public async Task<ActionResult<PostResponse>> Get(Guid postId)
     {
       var post = await _repository.GetUserPostByIdAsync(postId, HttpContext.GetUserId());
@@ -61,6 +64,8 @@ namespace LearnEveryDay.Controllers.Api.v1.Posts
     {
       createRequest.UserId = HttpContext.GetUserId();
       var post = _mapper.Map<Post>(createRequest);
+      
+      post.PublishedDate = post.PublishedDate != null ? post.PublishedDate : DateTime.Now;
 
       await _repository.CreatePostAsync(post);
 

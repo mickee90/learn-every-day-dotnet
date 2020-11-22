@@ -36,6 +36,7 @@ namespace LearnEveryDay.Installers
                     }
                 });
             });
+            services.AddSwaggerGenNewtonsoftSupport();
         }
     }
 }
