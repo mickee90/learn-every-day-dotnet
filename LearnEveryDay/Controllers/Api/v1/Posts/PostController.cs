@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using AutoMapper;
 using LearnEveryDay.Repositories;
 using LearnEveryDay.Extensions;
@@ -21,22 +22,21 @@ namespace LearnEveryDay.Controllers.Api.v1.Posts
   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class PostController : ControllerBase
   {
-    private readonly IPostRepository _repository;
     private readonly IPostService _service;
     private readonly IMapper _mapper;
 
-    public PostController(IPostRepository repository, IMapper mapper, IPostService service)
+    public PostController(IMapper mapper, IPostService service)
     {
-      _repository = repository;
       _mapper = mapper;
       _service = service;
     }
 
     // api/v1/posts
+    // @todo add pagination
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PostResponse>>> Index()
     {
-      var posts = await _repository.GetAllPostsByCurrentUserAsync(HttpContext.GetUserId());
+      var posts = await _service.GetPostsByUserIdAsync(HttpContext.GetUserId());
 
       var postResponse = _mapper.Map<IEnumerable<Post>>(posts);
 
@@ -47,7 +47,7 @@ namespace LearnEveryDay.Controllers.Api.v1.Posts
     [HttpGet("{postId}", Name="Get")]
     public async Task<ActionResult<PostResponse>> Get(Guid postId)
     {
-      var post = await _repository.GetUserPostByIdAsync(postId, HttpContext.GetUserId());
+      var post = await _service.GetUserPostByIdAsync(postId, HttpContext.GetUserId());
 
       if (post == null)
       {
@@ -65,11 +65,14 @@ namespace LearnEveryDay.Controllers.Api.v1.Posts
       createRequest.UserId = HttpContext.GetUserId();
       var post = _mapper.Map<Post>(createRequest);
       
-      post.PublishedDate = post.PublishedDate != null ? post.PublishedDate : DateTime.Now;
+      var createdPost = await _service.CreatePostAsync(post, HttpContext.GetUserId());
 
-      await _repository.CreatePostAsync(post);
-
-      var postResponse = _mapper.Map<PostResponse>(post);
+      if (createdPost == null)
+      {
+        return BadRequest(new ErrorResponse("The post could not be created."));
+      }
+      
+      var postResponse = _mapper.Map<PostResponse>(createdPost);
 
       return CreatedAtRoute(nameof(Get), new { postId = postResponse.Id }, postResponse);
     }
@@ -83,14 +86,7 @@ namespace LearnEveryDay.Controllers.Api.v1.Posts
         return BadRequest();
       }
 
-      var post = await _repository.GetUserPostByIdAsync(postId, HttpContext.GetUserId());
-
-      if (post == null)
-      {
-        return NotFound();
-      }
-
-      var response = await _service.UpdatePostAsync(post, request);
+      var response = await _service.UpdatePostAsync(postId, HttpContext.GetUserId(), request);
       
       if (!response.Success)
       {

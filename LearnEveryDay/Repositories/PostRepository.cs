@@ -43,7 +43,7 @@ namespace LearnEveryDay.Repositories
       return await SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Post>> GetAllPostsByUserIdAsync(Guid userId)
+    public async Task<IEnumerable<Post>> GetPostsByUserIdAsync(Guid userId)
     {
       if (Guid.Empty == userId)
       {
@@ -53,16 +53,6 @@ namespace LearnEveryDay.Repositories
       var posts = _context.Posts.Where(post => post.UserId == userId).OrderByDescending(post => post.PublishedDate);
 
       return await posts.ToListAsync();
-    }
-
-    public async Task<IEnumerable<Post>> GetAllPostsByCurrentUserAsync(Guid userId)
-    {
-      if (Guid.Empty == userId)
-      {
-        throw new UnauthorizedAccessException(nameof(userId));
-      }
-
-      return await GetAllPostsByUserIdAsync(userId);
     }
 
     public async Task<Post> GetPostByIdAsync(Guid postId)

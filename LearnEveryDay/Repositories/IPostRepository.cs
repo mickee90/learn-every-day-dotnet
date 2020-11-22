@@ -9,8 +9,7 @@ namespace LearnEveryDay.Repositories
   {
     Task<bool> SaveChangesAsync();
 
-    Task<IEnumerable<Post>> GetAllPostsByUserIdAsync(Guid UserId);
-    Task<IEnumerable<Post>> GetAllPostsByCurrentUserAsync(Guid UserId);
+    Task<IEnumerable<Post>> GetPostsByUserIdAsync(Guid UserId);
     Task<Post> GetPostByIdAsync(Guid id);
     Task<Post> GetUserPostByIdAsync(Guid postId, Guid userId);
     Task<bool> CreatePostAsync(Post Post);
