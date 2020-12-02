@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using LearnEveryDay.Repositories;
 using LearnEveryDay.Contracts.v1.Requests;
 using LearnEveryDay.Contracts.v1.Responses;
@@ -17,11 +18,13 @@ namespace LearnEveryDay.Controllers.Api.v1.Users
     {
         private readonly IUserRepository _repository;
         private readonly IUserService _service;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserRepository repository, IUserService service)
+        public UserController(IUserRepository repository, IUserService service, IMapper mapper)
         {
             _repository = repository;
             _service = service;
+            _mapper = mapper;
         }
 
         [HttpPut("update")]
@@ -45,7 +48,7 @@ namespace LearnEveryDay.Controllers.Api.v1.Users
                 });
             }
 
-            return Ok(new UserResponse(response.User, null));
+            return Ok(_mapper.Map<UserResponse>(response.User));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using LearnEveryDay.Repositories;
 using LearnEveryDay.Contracts.v1.Requests;
 using LearnEveryDay.Contracts.v1.Responses;
@@ -11,10 +12,12 @@ namespace LearnEveryDay.Controllers.Api.v1.Auth
     public class LoginController : ControllerBase
     {
         private readonly IUserRepository _repository;
+        private readonly IMapper _mapper;
 
-        public LoginController(IUserRepository repository)
+        public LoginController(IUserRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpPost("login")]
@@ -30,7 +33,10 @@ namespace LearnEveryDay.Controllers.Api.v1.Auth
                 });
             }
 
-            return Ok(new UserResponse(authResponse.User, authResponse.Token));
+            var authUser = _mapper.Map<UserResponse>(authResponse.User);
+            authUser.Token = authResponse.Token;
+            
+            return Ok(authUser);
         }
     }
 }

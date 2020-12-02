@@ -1,27 +1,26 @@
 ﻿using System;
-using LearnEveryDay.Data.Entities;
 using Newtonsoft.Json;
 
 namespace LearnEveryDay.Contracts.v1.Responses
 {
   public class UserResponse
   {
-    public UserResponse(User user, string token)
-    {
-      Id = user.Id;
-      UserTypeId = user.UserTypeId;
-      UserName = user.UserName;
-      FirstName = user.FirstName;
-      LastName = user.LastName;
-      Address = user.Address;
-      ZipCode = user.ZipCode;
-      City = user.City;
-      Email = user.Email;
-      Phone = user.Phone;
-      CountryId = user.CountryId;
-      Avatar = user.Avatar;
-      Token = token;
-    }
+    // public UserResponse(User user, string token)
+    // {
+    //   Id = user.Id;
+    //   UserTypeId = user.UserTypeId;
+    //   UserName = user.UserName;
+    //   FirstName = user.FirstName;
+    //   LastName = user.LastName;
+    //   Address = user.Address;
+    //   ZipCode = user.ZipCode;
+    //   City = user.City;
+    //   Email = user.Email;
+    //   Phone = user.Phone;
+    //   CountryId = user.CountryId;
+    //   Avatar = user.Avatar;
+    //   Token = token;
+    // }
 
     public Guid Id { get; set; }
 

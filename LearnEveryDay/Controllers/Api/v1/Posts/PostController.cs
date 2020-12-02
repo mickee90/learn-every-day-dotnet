@@ -38,7 +38,7 @@ namespace LearnEveryDay.Controllers.Api.v1.Posts
     {
       var posts = await _service.GetPostsByUserIdAsync(HttpContext.GetUserId());
 
-      var postResponse = _mapper.Map<IEnumerable<Post>>(posts);
+      var postResponse = _mapper.Map<IEnumerable<PostResponse>>(posts);
 
       return Ok(new PostsResponse(postResponse));
     }

@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnEveryDay", "LearnEvery
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnEveryDay.IntegrationTests", "LearnEveryDay.IntegrationTests\LearnEveryDay.IntegrationTests.csproj", "{3617D631-BEB3-416F-89AD-69455014F97A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnEveryDay.Contracts", "LearnEveryDay.Contracts\LearnEveryDay.Contracts.csproj", "{88FD7D95-A5C4-4202-B7F4-719E7F1BCC68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,5 +21,9 @@ Global
 		{3617D631-BEB3-416F-89AD-69455014F97A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3617D631-BEB3-416F-89AD-69455014F97A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3617D631-BEB3-416F-89AD-69455014F97A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88FD7D95-A5C4-4202-B7F4-719E7F1BCC68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88FD7D95-A5C4-4202-B7F4-719E7F1BCC68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88FD7D95-A5C4-4202-B7F4-719E7F1BCC68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88FD7D95-A5C4-4202-B7F4-719E7F1BCC68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
