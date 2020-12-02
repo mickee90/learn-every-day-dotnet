@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnEveryDay", "LearnEveryDay\LearnEveryDay.csproj", "{98DEDF1E-43E5-4326-BE6B-E59C79681ECC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnEveryDay.IntegrationTests", "LearnEveryDay.IntegrationTests\LearnEveryDay.IntegrationTests.csproj", "{3617D631-BEB3-416F-89AD-69455014F97A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +15,9 @@ Global
 		{98DEDF1E-43E5-4326-BE6B-E59C79681ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98DEDF1E-43E5-4326-BE6B-E59C79681ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98DEDF1E-43E5-4326-BE6B-E59C79681ECC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3617D631-BEB3-416F-89AD-69455014F97A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3617D631-BEB3-416F-89AD-69455014F97A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3617D631-BEB3-416F-89AD-69455014F97A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3617D631-BEB3-416F-89AD-69455014F97A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
