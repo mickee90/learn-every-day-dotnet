@@ -16,9 +16,8 @@ namespace LearnEveryDay
       Configuration = configuration;
     }
   
-    public IConfiguration Configuration { get; }
+    private IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
       // Single line to import all services located in the Installers-folder by the InstallerExtensions.cs
@@ -28,7 +27,6 @@ namespace LearnEveryDay
       // services.AddMemoryCache();
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
@@ -51,7 +49,7 @@ namespace LearnEveryDay
 
       var swaggerOptions = new SwaggerOptions();
       Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
-      ;
+      
       app.UseSwagger(option => { option.RouteTemplate = swaggerOptions.JsonRoute; });
 
       app.UseSwaggerUI(option =>

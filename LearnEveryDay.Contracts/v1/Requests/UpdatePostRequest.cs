@@ -22,6 +22,6 @@ namespace LearnEveryDay.Contracts.v1.Requests
         public string Content { get; set; }
 
         [Required]
-        public DateTime PublishedDate { get; set; }
+        public DateTime? PublishedDate { get; set; }
     }
 }

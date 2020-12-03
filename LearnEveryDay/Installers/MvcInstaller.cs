@@ -23,6 +23,7 @@ namespace LearnEveryDay.Installers
         s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
       });
 
+      // @todo Change to use the User Secrets instead
       var config = new AppConfiguration();
       config.MysqlUser = configuration["MysqlUser"];
       config.MysqlPassword = configuration["MysqlPassword"];

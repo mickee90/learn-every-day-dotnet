@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using LearnEveryDay.Domain;
-
-namespace LearnEveryDay
+﻿namespace LearnEveryDay
 {
   public class AppConfiguration
   {

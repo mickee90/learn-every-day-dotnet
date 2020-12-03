@@ -59,7 +59,7 @@ namespace LearnEveryDay.Services
             
             post.Title = request.Title;
             post.Ingress = request.Ingress;
-            post.PublishedDate = request.PublishedDate;
+            post.PublishedDate = request.PublishedDate ?? DateTime.Now;
             post.Content = request.Content;
 
             var response = await _repository.UpdatePostAsync(post);
